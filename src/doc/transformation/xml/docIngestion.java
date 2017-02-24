@@ -17,39 +17,28 @@ import org.xml.sax.SAXException;
  
 public class docIngestion {
  
-    public static void main(String[] args) throws XPathExpressionException {
-        try {
+    public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, SAXException, IOException, ParserConfigurationException {
+        
             // Создается построитель документа
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             // Создается дерево DOM документа из файла
-            Document document = documentBuilder.parse("bezsh.xml");
+            Document document = documentBuilder.parse("../forparsing/article2.xml");
  
-            
+            transformerFigures.transformerFiguresImpl(document);
+            transformerTables.transformerTablesImpl(document);
             transformerInTextCit.textTransformCitations(document);
+            transformerFigRefs.transformerFigRefsImpl(document);
+            transformerTableRefs.transformerTableRefsImpl(document);
             transformerMeta.textTransformMetaImpl(document);
+            transformerAbstractKey.transformerAbstractKeyImpl(document);
             
- 
-        } catch (ParserConfigurationException ex) {
-            ex.printStackTrace(System.out);
-        } catch (SAXException ex) {
-            ex.printStackTrace(System.out);
-        } catch (IOException ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
- 
-	// Функция для сохранения DOM в файл
-    
-    protected static void writeDocument(Document document) throws TransformerFactoryConfigurationError {
-        try {
+            
             Transformer tr = TransformerFactory.newInstance().newTransformer();
             DOMSource source = new DOMSource(document);
-            FileOutputStream fos = new FileOutputStream("other.xml");
+            FileOutputStream fos = new FileOutputStream("../forparsing/other.xml");
             StreamResult result = new StreamResult(fos);
             tr.transform(source, result);
-        } catch (TransformerException | IOException e) {
-            e.printStackTrace(System.out);
-        }
-    }
+       
+    }    
     
 }

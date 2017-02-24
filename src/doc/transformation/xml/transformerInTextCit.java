@@ -20,17 +20,19 @@ public class transformerInTextCit {
 		
 	    XPath xPath =  XPathFactory.newInstance().newXPath();
 	    
-        String expression1 = "/article/body/sec/p/text()|/article/body/sec/sec/p/text()";
+        String expression1 = "/article/body/sec/p/text()|/article/body/sec/sec/p/text()|/article/body/sec/sec/list/list-item/p/text()|/article/body/sec/sec/fig/caption/title/text()|/article/body/sec/fig/caption/title/text()|/article/body/sec/table-wrap/caption/title/text()|article/body/sec/sec/table-wrap/caption/title/text()|/article/body/sec/table-wrap/caption/p/text()|/article/body/sec/sec/table-wrap/caption/p/text()";
 		
 	    NodeList nodeList = (NodeList) xPath.compile(expression1).evaluate(document, XPathConstants.NODESET);
 	    for (int i = 0; i < nodeList.getLength(); i++) {
 	    	Text textNode = (Text) nodeList.item(i);
-	   	    System.out.println(textNode);
+	   	    
 	   	    int prevSplitOffset = 0;
-			Pattern k = Pattern.compile("\\[(\\d+)\\]");
-		    Matcher m = k.matcher(textNode.getData());
+			Pattern k = Pattern.compile("(?:\\G|\\[)[,;\\s]*(\\d+)");
+		    Matcher m = k.matcher(textNode.getTextContent());
 	        while(m.find()) {
+	         
 		      Text number = textNode.splitText(m.start(1) - prevSplitOffset);
+		      
 		      textNode = number.splitText(m.group(1).length());
 		      Element xref = document.createElement("xref");
 		      xref.setAttribute("rid", "bib" + m.group(1));
@@ -38,7 +40,7 @@ public class transformerInTextCit {
 		      number.getParentNode().replaceChild(xref, number);
 		      xref.appendChild(number);
 		      prevSplitOffset = m.end(1);
-		      docIngestion.writeDocument(document);
+		      
 	        }
 	    }
 	}
