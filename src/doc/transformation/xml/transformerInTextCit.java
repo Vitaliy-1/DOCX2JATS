@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 public class transformerInTextCit {
 	
-	protected static void textTransformCitations(Document document) throws XPathExpressionException {
+	static void textTransformCitations(Document document) throws XPathExpressionException {
 		
 		
 	    XPath xPath =  XPathFactory.newInstance().newXPath();

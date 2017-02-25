@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
 
 public class transformerTables {
 	
-	protected static void transformerTablesImpl (Document document) throws XPathExpressionException {
+	static void transformerTablesImpl (Document document) throws XPathExpressionException {
 		
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		
@@ -58,13 +58,6 @@ public class transformerTables {
 				tableCaption.appendChild(tableCommentary);
 			}
 			
-			//set label
-			
-		    
-			
-			
-			
-			//parse and set text in table caption title element 
 		}
 	}
 

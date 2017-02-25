@@ -16,7 +16,8 @@ import org.w3c.dom.Text;
 
 
 public class transformerFigures {
-	protected static void transformerFiguresImpl (Document document) throws XPathExpressionException {
+	
+	static void transformerFiguresImpl (Document document) throws XPathExpressionException {
 	
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		
@@ -34,7 +35,6 @@ public class transformerFigures {
 			Element figLabel = document.createElement("label");
 			figure.appendChild(figLabel);
 			Node figureName = customMethods.getPreviousElement(figure);
-			
 			
 			//getting data for label
 			Pattern k1 = Pattern.compile("^.+?(?=\\.)"); // before first dote

@@ -15,12 +15,12 @@ import org.w3c.dom.Text;
 
 public class transformerTableRefs {
 	
-	protected static void transformerTableRefsImpl (Document document) throws XPathExpressionException {
+	static void transformerTableRefsImpl (Document document) throws XPathExpressionException {
 		
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		String expression1 = "/article/body/sec/p/text()|/article/body/sec/sec/p/text()|/article/body/sec/sec/list/list-item/p/text()|/article/body/sec/sec/fig/caption/title/text()|/article/body/sec/fig/caption/title/text()|/article/body/sec/table-wrap/caption/title/text()|article/body/sec/sec/table-wrap/caption/title/text()|/article/body/sec/table-wrap/caption/p/text()|/article/body/sec/sec/table-wrap/caption/p/text()";
 		
-		 NodeList nodeList = (NodeList) xPath.compile(expression1).evaluate(document, XPathConstants.NODESET);
+		NodeList nodeList = (NodeList) xPath.compile(expression1).evaluate(document, XPathConstants.NODESET);
 	        
 	        for (int i = 0; i < nodeList.getLength(); i++) {
 		    	Text textNode = (Text) nodeList.item(i);

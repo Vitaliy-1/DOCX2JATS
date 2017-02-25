@@ -13,39 +13,35 @@ import org.w3c.dom.Text;
 
 public class transformerMeta extends docIngestion {
 	
-	public static void textTransformMetaImpl(Document document) throws XPathExpressionException {
+	static void textTransformMetaImpl(Document document) throws XPathExpressionException {
 		
-		  XPath xPath =  XPathFactory.newInstance().newXPath();
-		 //adding Journal-Id
+		XPath xPath =  XPathFactory.newInstance().newXPath();
+		
+		//adding Journal-Id
 	    Node journalIdValue = (Node) xPath.compile("/article/front/journal-meta/journal-id").evaluate(document, XPathConstants.NODE);
 	    Text textJournalId = document.createTextNode("Psychosomatic Medicine and General Practice");
 	    journalIdValue.appendChild(textJournalId);
 	    
-	    
 	    //adding ISSN
 	    Node journalIssn = (Node) xPath.compile("/article/front/journal-meta/issn").evaluate(document, XPathConstants.NODE);
 	    Text textJournalIssn = document.createTextNode("2519-8572");
-	    journalIssn.appendChild(textJournalIssn);
-	    
+	    journalIssn.appendChild(textJournalIssn);    
 	    
 	    //adding publisher name
 	    Node publisherName = (Node) xPath.compile("/article/front/journal-meta/publisher/publisher-name").evaluate(document, XPathConstants.NODE);
 	    Text textPublisherName = document.createTextNode("Private Publisher 'Chaban O. S.'");
 	    publisherName.appendChild(textPublisherName);
-	   
-	    
+	       
 	    //adding article-id
 	    Node articleIdParent = (Node) xPath.compile("/article/front/article-meta").evaluate(document, XPathConstants.NODE);
 	    Node articleIdPublisher = document.createElement("article-id");
 	    		((Element) articleIdPublisher).setAttribute("pub-id-type", "publisher-id");
 	    		articleIdPublisher.setTextContent(" ");
 	    articleIdParent.insertBefore(articleIdPublisher, articleIdParent.getFirstChild());
-	   
-	    
+	       
 	    //removing subtitle
 	    Node articleSubtitle = (Node) xPath.compile("/article/front/article-meta/title-group/subtitle").evaluate(document, XPathConstants.NODE);
-	    articleSubtitle.getParentNode().removeChild(articleSubtitle);
-	    
+	    articleSubtitle.getParentNode().removeChild(articleSubtitle);  
 	    
 	    //removing alt-title
 	    NodeList articleAltTitle = (NodeList) xPath.compile("/article/front/article-meta/title-group/alt-title").evaluate(document, XPathConstants.NODESET);
@@ -55,14 +51,12 @@ public class transformerMeta extends docIngestion {
 	        
 	    }
 	       
-	    
 	    //adding Ukrainian title
 	    Node articleTitleParent = (Node) xPath.compile("/article/front/article-meta/title-group").evaluate(document, XPathConstants.NODE);
 	    Node articleTitleUkrainian = document.createElement("article-title");
 	             ((Element) articleTitleUkrainian).setAttribute("xml:lang", "uk-UA");
 	             ((Element) articleTitleUkrainian).setTextContent(" ");
 	    articleTitleParent.appendChild(articleTitleUkrainian);
-	    
 	    
 	    //adding attributes to article tag
 	    Node articleElement = (Node) xPath.compile("/article").evaluate(document, XPathConstants.NODE);
@@ -71,7 +65,6 @@ public class transformerMeta extends docIngestion {
 	    ((Element) articleElement).setAttribute("article-type", "review");
 	    ((Element) articleElement).setAttribute("specific-use", "production");
 	    ((Element) articleElement).setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-	    
 	    
 	    //adding name, surname, given-names
 	    Node authorNameParent = (Node) xPath.compile("/article/front/article-meta/contrib-group/contrib").evaluate(document,  XPathConstants.NODE);
@@ -86,7 +79,6 @@ public class transformerMeta extends docIngestion {
 	    authorName.insertBefore(authorGivenNames, authorName.getFirstChild());
 	    authorName.insertBefore(authorSurname, authorName.getFirstChild());
 	    
-	    
 	    //adding xref
 	    Element authorXrefAff = document.createElement("xref");
 	    authorXrefAff.setAttribute("aff", "aff1");
@@ -98,7 +90,6 @@ public class transformerMeta extends docIngestion {
 	    authorXrefCorresp.setAttribute("corresp", "cor1");
 	    authorNameParent.appendChild(authorXrefCorresp);
 	    
-	    
 	    //transferring aff
 	    Node authorAffil = (Node) xPath.compile("/article/front/article-meta/contrib-group/contrib/aff").evaluate(document,  XPathConstants.NODE);
 	    authorAffil.getParentNode().removeChild(authorAffil);
@@ -107,7 +98,6 @@ public class transformerMeta extends docIngestion {
 	    Node contribGroup = (Node) xPath.compile("/article/front/article-meta/contrib-group").evaluate(document, XPathConstants.NODE);
 	    ((Element) contribGroup).appendChild(AuthorAffNew);
 	   
-	    
 	    //adding elements to aff
 	    Element authorInstitution = document.createElement("institution");
 	    ((Element) authorInstitution).setAttribute("content-type", "dept");
@@ -121,7 +111,6 @@ public class transformerMeta extends docIngestion {
 	    
 	    Element authorCountry = document.createElement("country");
 	    AuthorAffNew.appendChild(authorCountry);
-	   
 	    
 	    //adding author-notes
 	    Element authorNotes = document.createElement("author-notes");
@@ -133,7 +122,6 @@ public class transformerMeta extends docIngestion {
 	    
 	    Element authorEmail = document.createElement("email");
 	    authorCorresp.appendChild(authorEmail);
-	    
 	    
 	    //adding pub-date node
 	    Node articlePubDate = (Node) xPath.compile("/article/front/article-meta/pub-date").evaluate(document, XPathConstants.NODE);
@@ -149,7 +137,6 @@ public class transformerMeta extends docIngestion {
 	    
 	    Element articlePubDateYear = document.createElement("year");
 	    articlePubDate.appendChild(articlePubDateYear);
-	    
 	    
 	    //adding permissions node
 	    Element articlePermissions = document.createElement("permissions");

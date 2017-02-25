@@ -12,11 +12,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 public class transformerAbstractKey {
 	
-	protected static void transformerAbstractKeyImpl (Document document) throws XPathExpressionException {
+	static void transformerAbstractKeyImpl (Document document) throws XPathExpressionException {
 		
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		
