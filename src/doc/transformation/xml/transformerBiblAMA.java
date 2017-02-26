@@ -44,7 +44,7 @@ public class transformerBiblAMA {
 			    	elementCitation.appendChild(personGroup);
 			    	
 			    	// patterns for matching authors names
-			    	Pattern k2 = Pattern.compile("(?:\\G|^)[^.]+?\\b([A-Z\\-]{1,6})\\b"); //all before first dot
+			    	Pattern k2 = Pattern.compile("(?:\\G|^)[^.]+?\\b([A-Z\\-]{1,6})\\b"); //all author initialls before first dot
 			    	Matcher m2 = k2.matcher(references.item(j).getTextContent());
 			    	Pattern k3 = Pattern.compile("(?:\\G|^)[^.]+?\\b([A-Z][a-z\\-]+)\\b"); //all before first dot
 			    	Matcher m3 = k3.matcher(references.item(j).getTextContent());
@@ -63,11 +63,30 @@ public class transformerBiblAMA {
 			    	// TODO if authors are institutions (contrib) 
 			    	
 			    	// patterns for journals. TODO pattern for books, chapters and conference 
-			    	if (references.item(j).getTextContent().contains("[")) {
-			    		
+			    	if (references.item(j).getTextContent().contains("[book]")) {
+			    		elementCitation.setAttribute("publication-type", "book");
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
+				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
+			    		if (m4.find()) {
+					    	Element bookTitle = document.createElement("source");
+					    	bookTitle.setTextContent(m4.group("title"));
+					    	elementCitation.appendChild(bookTitle);
+					    	
+					    	Element bookLoc = document.createElement("publisher-loc");
+					    	bookLoc.setTextContent(m4.group("loc"));
+					    	elementCitation.appendChild(bookLoc);
+					    	
+					    	Element bookPub = document.createElement("publisher-name");
+					    	bookPub.setTextContent(m4.group("pub"));
+					    	elementCitation.appendChild(bookPub);
+					    	
+					    	Element bookYear = document.createElement("year");
+					    	bookYear.setTextContent(m4.group("year"));
+					    	elementCitation.appendChild(bookYear);
+			    		}
 			    	} else {
 			    		elementCitation.setAttribute("publication-type", "journal");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)\\.(.\\d+?)[\\.;](\\d+)[:\\(](?:(\\d+))?[\\);](?:(\\d+)-)?(?:(\\d+)\\.)?"); //all before first dot
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)[;]\\s?(?<volume>\\d+)(?:\\((?<issue>\\d+)\\))?\\s?:(?<fpage>\\d+|[A-Z]+\\d+)(?:-(?<lpage>\\d+))?");
 				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
 			    		if (m4.find()) {
 			    			Element articleTitle = document.createElement("article-title");
@@ -79,32 +98,61 @@ public class transformerBiblAMA {
 			    			elementCitation.appendChild(source);
 			    			
 			    			Element articleYear = document.createElement("year");
-			    			articleYear.setTextContent(m4.group(4));
+			    			articleYear.setTextContent(m4.group("year"));
 			    			elementCitation.appendChild(articleYear);
 			    			
-			    			Element articleVolume = document.createElement("volume");
-			    			articleVolume.setTextContent(m4.group(5));
-			    			elementCitation.appendChild(articleVolume);
-			    			
-			    		    Element articleIssue = document.createElement("issue");
-			    		    articleIssue.setTextContent(m4.group(6));
-			    		    elementCitation.appendChild(articleIssue);
-			    		    
-			    		    Element articleFirstPage = document.createElement("fpage");
-			    		    articleFirstPage.setTextContent(m4.group(7));
-			    		    elementCitation.appendChild(articleFirstPage);
-			    		    
-			    		    Element articleLastPage = document.createElement("lpage");
-			    		    articleLastPage.setTextContent(m4.group(8));
-			    		    elementCitation.appendChild(articleLastPage);
-			    		    System.out.println(m4.group());
-			    		}
-			    	}
 			    	
-			    }
-			    
+			    			Element articleVolume = document.createElement("volume");
+			    			articleVolume.setTextContent(m4.group("volume"));
+			    			elementCitation.appendChild(articleVolume);
+			    		  
+			    			if (m4.group("issue") != null) {
+			    				Element issue = document.createElement("issue");
+			    				issue.setTextContent(m4.group("issue"));
+			    				elementCitation.appendChild(issue);
+			    			}
+			    			
+			    			if (m4.group("fpage") !=null) {
+			    				Element fpage = document.createElement("fpage");
+			    				fpage.setTextContent(m4.group("fpage"));
+			    				elementCitation.appendChild(fpage);
+			    			}
+			    			
+			    			if (m4.group("lpage") != null) {
+			    				Element lpage = document.createElement("lpage");
+			    				lpage.setTextContent(m4.group("lpage"));
+			    				elementCitation.appendChild(lpage);
+			    			}
+			    			
+			    			Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:))\\s*?(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
+					    	Matcher urlType = pattern.matcher(references.item(j).getTextContent());
+			    			while (urlType.find()) {
+			    				if (urlType.group("doi") != null) {
+			    					Element doi = document.createElement("pub-id");
+			    					doi.setTextContent(urlType.group("url"));
+			    					doi.setAttribute("pub-id-type", "doi");
+			    					elementCitation.appendChild(doi);
+			    				}
+			    				else if (urlType.group("pmid") != null) {
+			    					Element pmid = document.createElement("pub-id");
+			    					pmid.setTextContent(urlType.group("url"));
+			    					pmid.setAttribute("pub-id-type", "pmid");
+			    					elementCitation.appendChild(pmid);
+			    				}
+			    				else {
+			    					Element url = document.createElement("ext-link");
+			    					url.setTextContent(urlType.group("url"));
+			    					url.setAttribute("ext-link-type", "uri");
+			    					elementCitation.appendChild(url);
+			    				}
+			    			}
+			    		}
+			    	}	
+			    }   
+			    Node secReferences = internal.getParentNode();
+			    secReferences.getParentNode().removeChild(secReferences);
 			}
-		}
+		}	             
  	}
 
 }
