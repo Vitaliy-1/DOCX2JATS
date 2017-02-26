@@ -26,7 +26,7 @@ public class transformerTableRefs {
 		    	Text textNode = (Text) nodeList.item(i);
 		   	    
 		   	    int prevSplitOffset = 0;
-				Pattern k = Pattern.compile("(табл.\\s(\\d+)|[Тр]аблиця\\s(\\d+)|[Тт]аблиці\\s(\\d+)|tabl.\\s(\\d+)|[Tt]able\\s(\\d+))");
+				Pattern k = Pattern.compile("(табл.\\s(\\d+)|[Тр]аблиця\\s(\\d+)|[Тт]аблиці\\s(\\d+)|[Тт]аблиця\\s(\\d+)|tabl.\\s(\\d+)|[Tt]able\\s(\\d+))");
 			    Matcher m = k.matcher(textNode.getTextContent());
 			    
 			    //creating nodes and grouping pattern results
