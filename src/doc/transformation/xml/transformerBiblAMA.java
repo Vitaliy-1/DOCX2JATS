@@ -43,24 +43,43 @@ public class transformerBiblAMA {
 			    	personGroup.setAttribute("person-group-type", "author");
 			    	elementCitation.appendChild(personGroup);
 			    	
-			    	// patterns for matching authors names
-			    	Pattern k2 = Pattern.compile("(?:\\G|^)[^.]+?\\b([A-Z\\-]{1,6})\\b"); //all author initialls before first dot
-			    	Matcher m2 = k2.matcher(references.item(j).getTextContent());
-			    	Pattern k3 = Pattern.compile("(?:\\G|^)[^.]+?\\b([A-Z][a-z\\-]+)\\b"); //all before first dot
-			    	Matcher m3 = k3.matcher(references.item(j).getTextContent());
+			    	/* Patterns for matching authors names 
+			    	 * check if there is authors initials and add authors surnames and given-names
+			    	 * else treat as collaboration group
+			    	 * */
+			    	Pattern k2add = Pattern.compile("(?:\\G|^)[^.]+?(?<givenNames>\\b([A-Z\\-]{1,6})\\b)"); //all author initialls before first dot
+			    	Matcher m2add = k2add.matcher(references.item(j).getTextContent());
 			    	
-			    	while (m2.find() && m3.find()) {
-			    		Element name = document.createElement("name");
-			    		personGroup.appendChild(name);
-			    		Element surname = document.createElement("surname");
-			    		name.appendChild(surname);
-			    		Element givenNames = document.createElement("given-names");
-			    		name.appendChild(givenNames);
-			    		givenNames.setTextContent(m2.group(1));
-			    		surname.setTextContent(m3.group(1));
+			    	Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before forst dot
+			    	Matcher m2 = k2.matcher(references.item(j).getTextContent());
+			    	
+			    	if (m2add.find()) {
+				    	while (m2.find()) {
+				    		String [] articleNames = m2.group(1).trim().split(",");
+				    		for (int y = 0; y < articleNames.length; y++) {
+				    			System.out.println(articleNames[y]);
+				    		   
+					    		Element name = document.createElement("name");
+					    		personGroup.appendChild(name);
+					    		Element surname = document.createElement("surname");
+					    		name.appendChild(surname);
+					    		Element givenNames = document.createElement("given-names");
+					    		name.appendChild(givenNames);
+					    		String[] namesOrSurnames = articleNames[y].trim().split(" ", 2);
+					    		for (int yy=0; yy < namesOrSurnames.length; yy++) {
+						    		givenNames.setTextContent(namesOrSurnames[1]);
+				                    surname.setTextContent(namesOrSurnames[0]);
+					    		}
+				    		}
+				    	}
+			    	} else {
+			    		while (m2.find()) {
+			    			Element collab = document.createElement("collab");
+			    			collab.setTextContent(m2.group(1).trim());
+			    			personGroup.appendChild(collab);
+			    		}
 			    	}
 			    	
-			    	// TODO if authors are institutions (contrib) 
 			    	
 			    	// patterns for journals. TODO pattern for books, chapters and conference 
 			    	if (references.item(j).getTextContent().contains("[book]")) {
@@ -86,15 +105,22 @@ public class transformerBiblAMA {
 			    		}
 			    	} else {
 			    		elementCitation.setAttribute("publication-type", "journal");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)[;]\\s?(?<volume>\\d+)(?:\\((?<issue>\\d+)\\))?\\s?:(?<fpage>\\d+|[A-Z]+\\d+)(?:-(?<lpage>\\d+))?");
+			    		//Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)[;]\\s?(?<volume>\\d+)(?:\\((?<issue>\\d+)\\))?\\s?:(?<fpage>\\d+|[A-Za-z]+\\d+)(?:-(?<lpage>\\d+))?");
+			    		/* valid are: 
+			    		 * Author IU, Author I-U. Article Title. Journal Name. 2017.
+			    		 *                                    ...Journal Name. 2017;4:e11386.
+			    		 *                                    ...Journal Name. 2017;4(3):152-159.
+			    		 * Most whitespaces are ignored
+			    		 * */
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?;?\\s*?(?:(?<volume>\\d+))?(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[\\-\\–](?<lpage>\\d+))?\\.");
 				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
 			    		if (m4.find()) {
 			    			Element articleTitle = document.createElement("article-title");
-			    			articleTitle.setTextContent(m4.group(2));
+			    			articleTitle.setTextContent(m4.group(2).trim());
 			    			elementCitation.appendChild(articleTitle);
 			    			
 			    			Element source = document.createElement("source");
-			    			source.setTextContent(m4.group(3));
+			    			source.setTextContent(m4.group(3).replace(".", "").trim());
 			    			elementCitation.appendChild(source);
 			    			
 			    			Element articleYear = document.createElement("year");
@@ -123,32 +149,35 @@ public class transformerBiblAMA {
 			    				lpage.setTextContent(m4.group("lpage"));
 			    				elementCitation.appendChild(lpage);
 			    			}
-			    			
-			    			Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:))\\s*?(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
-					    	Matcher urlType = pattern.matcher(references.item(j).getTextContent());
-			    			while (urlType.find()) {
-			    				if (urlType.group("doi") != null) {
-			    					Element doi = document.createElement("pub-id");
-			    					doi.setTextContent(urlType.group("url"));
-			    					doi.setAttribute("pub-id-type", "doi");
-			    					elementCitation.appendChild(doi);
-			    				}
-			    				else if (urlType.group("pmid") != null) {
-			    					Element pmid = document.createElement("pub-id");
-			    					pmid.setTextContent(urlType.group("url"));
-			    					pmid.setAttribute("pub-id-type", "pmid");
-			    					elementCitation.appendChild(pmid);
-			    				}
-			    				else {
-			    					Element url = document.createElement("ext-link");
-			    					url.setTextContent(urlType.group("url"));
-			    					url.setAttribute("ext-link-type", "uri");
-			    					elementCitation.appendChild(url);
-			    				}
-			    			}
 			    		}
-			    	}	
+			    	} // end of separate journal/book/conference parsing
+			    	
+			    	 /* pattern for DOI, PMID or URL */
+			    	Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:))\\s*?(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
+			    	Matcher urlType = pattern.matcher(references.item(j).getTextContent());
+	    			while (urlType.find()) {
+	    				if (urlType.group("doi") != null) {
+	    					Element doi = document.createElement("pub-id");
+	    					doi.setTextContent(urlType.group("url").replace("https://doi.org/", ""));
+	    					doi.setAttribute("pub-id-type", "doi");
+	    					elementCitation.appendChild(doi);
+	    				}
+	    				else if (urlType.group("pmid") != null) {
+	    					Element pmid = document.createElement("pub-id");
+	    					pmid.setTextContent(urlType.group("url"));
+	    					pmid.setAttribute("pub-id-type", "pmid");
+	    					elementCitation.appendChild(pmid);
+	    				}
+	    				else {
+	    					Element url = document.createElement("ext-link");
+	    					url.setTextContent(urlType.group("url"));
+	    					url.setAttribute("ext-link-type", "uri");
+	    					elementCitation.appendChild(url);
+	    				}
+	    			}
+			    	
 			    }   
+			    
 			    Node secReferences = internal.getParentNode();
 			    secReferences.getParentNode().removeChild(secReferences);
 			}

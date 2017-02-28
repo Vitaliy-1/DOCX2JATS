@@ -50,12 +50,15 @@ public class transformerTables {
 				tableTitle.setTextContent(m1.group(1).trim());
 			}
 			
-			//pars and set caption children element "p" (table commentary)
+			//parse and set caption children element "p" (table commentary)
 			Element tableCommentary = customMethods.getNextElement(table);
 			Pattern k2 = Pattern.compile("^\\s*\\*"); // first * symbol ignoring whitespaces
-			Matcher m2 = k2.matcher(tableCommentary.getTextContent());
-			while (m2.find()) {
+			if (tableCommentary != null) {
+				Matcher m2 = k2.matcher(tableCommentary.getTextContent());
+				while (m2.find() && tableCommentary.getTextContent() != null) {
 				tableCaption.appendChild(tableCommentary);
+			}
+			
 			}
 			
 		}

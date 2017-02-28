@@ -9,7 +9,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -20,10 +19,7 @@ public class transformerAbstractKey {
 		XPath xPath =  XPathFactory.newInstance().newXPath();
 		
 		//adding abstract node
-		Node abstractParent = (Node) xPath.compile("/article/front/article-meta").evaluate(document, XPathConstants.NODE);
-		Element articleAbstract = document.createElement("abstract");
-		articleAbstract.setAttribute("abstract-type", "section");
-		abstractParent.appendChild(articleAbstract);
+		Node articleAbstract = (Node) xPath.compile("/article/front/article-meta/abstract").evaluate(document, XPathConstants.NODE);
 		
 		//checking if abstract is in the article text
 		NodeList listOfSecTitles = (NodeList) xPath.compile("/article/body/sec/title").evaluate(document,  XPathConstants.NODESET);
@@ -45,7 +41,29 @@ public class transformerAbstractKey {
 			 
 		}
 		
-		//adding keywords
+        Node articleAbstractTrans = (Node) xPath.compile("/article/front/article-meta/trans-abstract").evaluate(document, XPathConstants.NODE);
+		
+		//checking if transled abstract is in the article text
+		NodeList listOfSecTitlesTrans = (NodeList) xPath.compile("/article/body/sec/title").evaluate(document,  XPathConstants.NODESET);
+		
+		for(int i = 0; i<listOfSecTitlesTrans.getLength(); i++) {
+			Node textNode = (Node) listOfSecTitlesTrans.item(i);
+			String textNodeText = textNode.getTextContent();
+			
+			//matches only if title contains word "анотація" case and space insensitive 
+			Pattern k = Pattern.compile("(?i)^\\s*[Аа]нотація\\s*$");
+			Matcher m = k.matcher(textNodeText);
+			if(m.find()) {
+		    Node nodeToCopy = document.importNode(textNode.getParentNode(), true);
+		    articleAbstractTrans.appendChild(nodeToCopy);
+		    Node textNodeParent = textNode.getParentNode();
+		    textNodeParent.getParentNode().removeChild(textNodeParent);
+		    
+			}
+			 
+		}
+		
+		// TODO adding keywords
 		
 	}
 

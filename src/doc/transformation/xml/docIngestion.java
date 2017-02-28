@@ -25,7 +25,7 @@ public class docIngestion {
             // Создается построитель документа
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             // Создается дерево DOM документа из файла
-            Document document = documentBuilder.parse("../forparsing/article2.xml");
+            Document document = documentBuilder.parse("../forparsing/tarasov_for_jats.xml");
             
             transformerArticleBack.transformerArticleBack(document);
             transformerBiblAMA.transformerBiblFinder(document);
