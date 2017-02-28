@@ -82,13 +82,17 @@ public class transformerMeta extends docIngestion {
 	    /* adding xref */
 	    Element authorXrefAff = document.createElement("xref");
 	    authorXrefAff.setTextContent(" ");
-	    authorXrefAff.setAttribute("aff", "aff1");
+	    authorXrefAff.setAttribute("ref-type", "aff");
+	    authorXrefAff.setAttribute("rid", "aff1");
 	    authorNameParent.appendChild(authorXrefAff);
 	    Element authorXrefFn = document.createElement("xref");
-	    authorXrefFn.setAttribute("fn", "conf1");
+	    authorXrefFn.setAttribute("ref-type", "fn");
+	    authorXrefFn.setAttribute("rid", "conf1");
 	    authorNameParent.appendChild(authorXrefFn);
 	    Element authorXrefCorresp = document.createElement("xref");
-	    authorXrefCorresp.setAttribute("corresp", "cor1");
+	    authorXrefCorresp.setAttribute("ref-type", "corresp");
+	    authorXrefCorresp.setAttribute("rid", "cor1");
+	    
 	    authorNameParent.appendChild(authorXrefCorresp);
 	    
 	    /* transferring aff */
