@@ -82,25 +82,55 @@ public class transformerBiblAMA {
 			    	
 			    	
 			    	// patterns for journals. TODO pattern for books, chapters and conference 
-			    	if (references.item(j).getTextContent().contains("[book]")) {
+			    	if (references.item(j).getTextContent().contains("[con")) {
+			    		elementCitation.setAttribute("publication-type", "conference");
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);\\s*?(?:.*?,)?(?:\\s*?(?<year>\\d+))?\\.?\\s*?(?:(?<city>.*?),)?(?:(?<country>.*?)\\.)?");
+				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
+				    	if (m4.find()) {
+				    		Element source = document.createElement("source");
+				    		source.setTextContent(m4.group("title").trim());
+				    		elementCitation.appendChild(source);
+				    		
+				    		Element conf_name = document.createElement("conf-name");
+				    		conf_name.setTextContent(m4.group("conference").trim());
+				    		elementCitation.appendChild(conf_name);
+				    		
+				    		Element conf_loc = document.createElement("conf-loc");
+				    		if (m4.group("city") != null && m4.group("country") != null) {
+				    			conf_loc.setTextContent(m4.group("city").trim() + ", " + m4.group("country").trim());
+				    			elementCitation.appendChild(conf_loc);
+				    		} else if (m4.group("city") !=null) {
+				    			conf_loc.setTextContent(m4.group("city").trim());
+				    			elementCitation.appendChild(conf_loc);
+				    		} else if (m4.group("country") !=null) {
+				    			conf_loc.setTextContent(m4.group("country").trim());
+				    			elementCitation.appendChild(conf_loc);
+				    		} else {
+				    			break;
+				    		}
+				    		
+				    		
+				    	}
+				    	
+			    	} else if (references.item(j).getTextContent().contains("[book]")) {
 			    		elementCitation.setAttribute("publication-type", "book");
 			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
 				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
 			    		if (m4.find()) {
 					    	Element bookTitle = document.createElement("source");
-					    	bookTitle.setTextContent(m4.group("title"));
+					    	bookTitle.setTextContent(m4.group("title").trim());
 					    	elementCitation.appendChild(bookTitle);
 					    	
 					    	Element bookLoc = document.createElement("publisher-loc");
-					    	bookLoc.setTextContent(m4.group("loc"));
+					    	bookLoc.setTextContent(m4.group("loc").trim());
 					    	elementCitation.appendChild(bookLoc);
 					    	
 					    	Element bookPub = document.createElement("publisher-name");
-					    	bookPub.setTextContent(m4.group("pub"));
+					    	bookPub.setTextContent(m4.group("pub").trim());
 					    	elementCitation.appendChild(bookPub);
 					    	
 					    	Element bookYear = document.createElement("year");
-					    	bookYear.setTextContent(m4.group("year"));
+					    	bookYear.setTextContent(m4.group("year").trim());
 					    	elementCitation.appendChild(bookYear);
 			    		}
 			    	} else {
@@ -109,7 +139,7 @@ public class transformerBiblAMA {
 			    		/* valid are: 
 			    		 * Author IU, Author I-U. Article Title. Journal Name. 2017.
 			    		 *                                    ...Journal Name. 2017;4:e11386.
-			    		 *                                    ...Journal Name. 2017;4(3):152-159.
+			    		 * ...Journal Name. 2017;4(3):152-159.
 			    		 * Most whitespaces are ignored
 			    		 * */
 			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?;?\\s*?(?:(?<volume>\\d+))?(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[\\-\\–](?<lpage>\\d+))?\\.");
@@ -124,29 +154,30 @@ public class transformerBiblAMA {
 			    			elementCitation.appendChild(source);
 			    			
 			    			Element articleYear = document.createElement("year");
-			    			articleYear.setTextContent(m4.group("year"));
+			    			articleYear.setTextContent(m4.group("year").trim());
 			    			elementCitation.appendChild(articleYear);
 			    			
-			    	
-			    			Element articleVolume = document.createElement("volume");
-			    			articleVolume.setTextContent(m4.group("volume"));
-			    			elementCitation.appendChild(articleVolume);
-			    		  
+			    	        if (m4.group("volume") != null) {
+				    			Element articleVolume = document.createElement("volume");
+				    			articleVolume.setTextContent(m4.group("volume").trim());
+				    			elementCitation.appendChild(articleVolume);
+			    	        }
+			    			
 			    			if (m4.group("issue") != null) {
 			    				Element issue = document.createElement("issue");
-			    				issue.setTextContent(m4.group("issue"));
+			    				issue.setTextContent(m4.group("issue").trim());
 			    				elementCitation.appendChild(issue);
 			    			}
 			    			
 			    			if (m4.group("fpage") !=null) {
 			    				Element fpage = document.createElement("fpage");
-			    				fpage.setTextContent(m4.group("fpage"));
+			    				fpage.setTextContent(m4.group("fpage").trim());
 			    				elementCitation.appendChild(fpage);
 			    			}
 			    			
 			    			if (m4.group("lpage") != null) {
 			    				Element lpage = document.createElement("lpage");
-			    				lpage.setTextContent(m4.group("lpage"));
+			    				lpage.setTextContent(m4.group("lpage").trim());
 			    				elementCitation.appendChild(lpage);
 			    			}
 			    		}
