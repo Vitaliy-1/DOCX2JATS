@@ -26,5 +26,8 @@
 	<classpathentry kind="lib" path="lib/wmf2svg-0.9.8.jar"/>
 	<classpathentry kind="lib" path="lib/xalan-2.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlgraphics-commons-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/ant-launcher.jar"/>
+	<classpathentry kind="lib" path="lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/saxon9he.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

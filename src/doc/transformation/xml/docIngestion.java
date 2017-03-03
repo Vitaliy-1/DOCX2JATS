@@ -17,15 +17,21 @@ import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import doc.transformation.docx.docxTransform;
+
  
 public class docIngestion {
  
     public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException {
-        
+    	String outputFile = "../../2.xml";
+    	
+    	    
+    	docxTransform.antFileTransform("../../example.docx", outputFile);
+    	//docxTransform.teiFileTransform(outputFile, "Stylesheets/nlm/tei_to_nlm.xsl", teiOutput);
             // Создается построитель документа
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             // Создается дерево DOM документа из файла
-            Document document = documentBuilder.parse("../forparsing/tarasov_for_jats.xml");
+            Document document = documentBuilder.parse(outputFile);
             
             transformerArticleBack.transformerArticleBack(document);
             transformerBiblAMA.transformerBiblFinder(document);
@@ -40,7 +46,7 @@ public class docIngestion {
             
             Transformer tr = TransformerFactory.newInstance().newTransformer();
             DOMSource source = new DOMSource(document);
-            FileOutputStream fos = new FileOutputStream("../forparsing/other.xml");
+            FileOutputStream fos = new FileOutputStream("other.xml");
             StreamResult result = new StreamResult(fos);
             tr.transform(source, result);
        
