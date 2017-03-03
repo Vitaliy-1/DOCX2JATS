@@ -26,7 +26,7 @@ public class transformerBiblAMA {
 			Text articleSectionTitle = (Text) articleSectionTitles.item(i);
 			Pattern k1 = Pattern.compile("[Rr]eference|(?=.*?[Сc]писок)(?=.*?літератури).*$");
 			Matcher m1 = k1.matcher(articleSectionTitle.getTextContent());
-			while (m1.find()) {
+			if (m1.find()) {
 			    Node internal = articleSectionTitle.getParentNode();
 			    Node List = customMethods.getNextElement(internal);
 			    //NodeList references = List.getChildNodes();
@@ -60,7 +60,7 @@ public class transformerBiblAMA {
 			    	// patterns for journals. TODO pattern for books, chapters and conference 
 			    	if (references.item(j).getTextContent().contains("[cha")) {
 			    		elementCitation.setAttribute("publication-type", "chapter");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
 				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
 			    		chapterParsing(document, elementCitation, m4);
 			    		
