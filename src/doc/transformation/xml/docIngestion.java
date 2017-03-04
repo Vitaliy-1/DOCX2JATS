@@ -7,6 +7,7 @@ import java.io.IOException;
 
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -40,7 +41,7 @@ public class docIngestion {
 	private static void ingestionAndTransform(String docxInputFile, String newJATSOutput)
 			throws TransformerFactoryConfigurationError, TransformerConfigurationException, TransformerException,
 			XPathExpressionException, FileNotFoundException {
-		File buildFile = new File("Stylesheets/docx/build-from.xml");
+		File buildFile = new File("stylesheets/docx/build-from.xml");
     	Project project = new Project();
     		
     	project.setUserProperty("ant.file", buildFile.getAbsolutePath());     
@@ -49,7 +50,7 @@ public class docIngestion {
     	consoleLogger.setOutputPrintStream(System.out);
     	consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
     	project.addBuildListener(consoleLogger);
-    	String teiOutput = "E:/Workspace/Test/1.xml";
+    	String teiOutput = "../temp/tei.xml";
     	
     	try {
     	    project.fireBuildStarted();
@@ -75,8 +76,8 @@ public class docIngestion {
     	TransformerFactory tFactory = TransformerFactory.newInstance();
     	
     	DOMResult teiResult = new DOMResult();
-        Transformer transformer = tFactory.newTransformer(new StreamSource(new File("Stylesheets/nlm/tei_to_nlm.xsl")));
-        transformer.transform(new StreamSource(new File(teiOutput)),
+        Transformer transformer = tFactory.newTransformer(new StreamSource(new File("stylesheets/nlm/tei_to_nlm.xsl")));
+        transformer.transform(new StreamSource(new File("stylesheets/temp/" + teiOutput)),
                               teiResult);
     
     	Document document = (Document) teiResult.getNode();
@@ -92,6 +93,8 @@ public class docIngestion {
 	    transformerAbstractKey.transformerAbstractKeyImpl(document);
 	            
 	    Transformer tr = TransformerFactory.newInstance().newTransformer();
+	    tr.setOutputProperty(OutputKeys.INDENT, "yes");
+	    tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 	    DOMSource source = new DOMSource(document);
 	    FileOutputStream fos = new FileOutputStream(newJATSOutput);
 	    StreamResult result = new StreamResult(fos);
