@@ -10,5 +10,5 @@ Downloads docx file, unpacks it to default user temp directory, parses OOXML and
 5. Examples of well-formed docx files for parsing are presened in the root directory of the project (article1.docx, article2.docx).
 
 ## How to use?
-Download the latest release: https://github.com/Vitaliy-1/DOCX2JATS/releases and
-run as executable jar file.
+Download and unpack the latest release: https://github.com/Vitaliy-1/DOCX2JATS/releases and
+run as executable jar file. Please note that jar file must be in one parent directory with stylesheet folder
