@@ -6,7 +6,7 @@ Downloads docx file, unpacks it to default users' temp directory, parses OOXML a
 1. Titles, subtitles etc  
 2. Bibliography as separete list at the end of the documens. It is better to explicitly point title for bibliography list, for example as "references" or "список використаної літератури".
 3. In-text citations should be pointed as [1], [2] or [3,4,5]. For now are supported only citations in square brackets.
-4. For best result bibliography list should be writed in AMA or Vancouver citation style.
+4. For best result bibliography list should be written in AMA or Vancouver citation style.
 5. Examples of well-formed docx files for parsing are presened in the root directory of the project (article1.docx, article2.docx).
 
 ## How to use?
