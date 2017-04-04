@@ -1,1 +1,0 @@
-AGORA project
