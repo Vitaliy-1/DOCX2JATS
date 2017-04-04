@@ -1,9 +1,25 @@
 package doc.transformation.xml;
 
+import java.util.regex.Matcher;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class customMethods {
+	
+	public static int groupNotNullCount(Matcher mChapter) {
+		int CountNotNull = 0;
+    	while (mChapter.find()) {
+    		for (int i = 0; i < mChapter.groupCount(); i++) {
+	    		if (mChapter.group() != null) {
+	    			CountNotNull++;
+	    		} else {
+	    			break;
+	    		}
+    		}
+	    }    
+    	return CountNotNull;	
+	}
 
 	//removes all child nodes
 	public static void removeChilds(Node node) {

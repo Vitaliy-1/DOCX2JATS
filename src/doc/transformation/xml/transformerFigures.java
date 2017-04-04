@@ -51,13 +51,15 @@ public class transformerFigures {
 		    Pattern k2 = Pattern.compile("\\.(.*)"); //group is after the first dot
 		    Matcher m2 = k2.matcher(figureName.getTextContent());
 		    
-		    Text forRemove = (Text) figureName.getFirstChild();
-		    
-		    figureName.appendChild(forRemove);
-		    while (m2.find()) {
-		    	forRemove.setTextContent( m2.group(1).trim());
+		    try {
+		    	Text forRemove = (Text) figureName.getFirstChild();
+			    figureName.appendChild(forRemove);
+			    while (m2.find()) {
+			    	forRemove.setTextContent( m2.group(1).trim());
+			    }
+		    } catch (ClassCastException e) {
+		    	System.err.println("Error: Figure title must not by bold or italic or underlined. Java error code for developers: " + e.getMessage());
 		    }
-		    
 		    //setting figures commentary
 		    Element figureCommentary = customMethods.getNextElement(figure);
 		    

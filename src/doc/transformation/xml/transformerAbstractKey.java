@@ -43,7 +43,7 @@ public class transformerAbstractKey {
 		
         Node articleAbstractTrans = (Node) xPath.compile("/article/front/article-meta/trans-abstract").evaluate(document, XPathConstants.NODE);
 		
-		//checking if transled abstract is in the article text
+		//checking if translated abstract is in the article text
 		NodeList listOfSecTitlesTrans = (NodeList) xPath.compile("/article/body/sec/title").evaluate(document,  XPathConstants.NODESET);
 		
 		for(int i = 0; i<listOfSecTitlesTrans.getLength(); i++) {

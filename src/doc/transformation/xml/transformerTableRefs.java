@@ -37,7 +37,7 @@ public class transformerTableRefs {
 			      Element xref = document.createElement("xref");
 			      for (int c = 2; c<=m.groupCount(); c++) {
 			    	  if (m.group(c) != null) {
-			          xref.setAttribute("rid", "tabl" + m.group(c));
+			          xref.setAttribute("rid", "tbl" + m.group(c));
 			          break;
 			    	  }
 			      }

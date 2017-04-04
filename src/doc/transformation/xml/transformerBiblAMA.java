@@ -56,8 +56,43 @@ public class transformerBiblAMA {
 			    	
 			    	authorsParsing(document, personGroup, m2add, m2);
 			    	
+			    	// patterns for journals. TODO pattern for books, chapters and conferences
+			        Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
+				    int mChapterCount = customMethods.groupNotNullCount(pChapter.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
+				    
+			    	Pattern pConference = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);[ ]*(?:(?<confdate>\\w+[ ]*\\d+),)?[ ]*(?<year>\\d+)\\.[ ]*(?:(?<city>\\w+)?)[, ]*(?<country>\\w+)");
+				    int mConferenceCount = customMethods.groupNotNullCount(pConference.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
+				    				    		
+			    	Pattern pBook = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
+				    int mBookCount = customMethods.groupNotNullCount(pBook.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));   
 			    	
-			    	// patterns for journals. TODO pattern for books, chapters and conference 
+			    	Pattern pJournal = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?[;.]\\s*?(?:(?<volume>\\d+))?[ ]*(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
+				    Matcher mJournal = pJournal.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", ""));
+				    int mJournalCount = customMethods.groupNotNullCount(mJournal);
+				    //System.out.println(j + 1 + "------Chapter: " + mChapterCount + "--Conferece: " + mConferenceCount + "--Book: " + mBookCount + "--Journal: " + mJournalCount);
+				    /* valid are: 
+		    		 * Author IU, Author I-U. Article Title. Journal Name. 2017.
+		    		 *                                    ...Journal Name. 2017;4:e11386.
+		    		 * ...Journal Name. 2017;4(3):152-159.
+		    		 * Most whitespaces are ignored
+		    		 * */
+			    					    	
+		    	    if ((mConferenceCount >= mChapterCount) && (mConferenceCount >= mBookCount) && (mConferenceCount >= mJournalCount)) {
+		    	    	elementCitation.setAttribute("publication-type", "conference");
+		    	    	conferenceParsing(document, elementCitation, pConference.matcher(references.item(j).getTextContent()));
+		    	    } else if ((mBookCount >= mChapterCount) && (mBookCount >= mJournalCount)) {
+		    	    	elementCitation.setAttribute("publication-type", "book");
+		    	    	bookParsing(document, elementCitation, pBook.matcher(references.item(j).getTextContent()));
+		    	    } else if (mChapterCount >= mJournalCount) {
+		    	    	elementCitation.setAttribute("publication-type", "chapter");
+		    	    	chapterParsing(document, elementCitation, pChapter.matcher(references.item(j).getTextContent()));
+		            } else {
+		    	    	elementCitation.setAttribute("publication-type", "journal");
+		    	    	journalParsing(document, elementCitation,pJournal.matcher(references.item(j).getTextContent()));
+		    	    }
+			    
+		    	   
+			    	/*
 			    	if (references.item(j).getTextContent().contains("[cha")) {
 			    		elementCitation.setAttribute("publication-type", "chapter");
 			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
@@ -78,21 +113,17 @@ public class transformerBiblAMA {
 			    		
 			    	} else {
 			    		elementCitation.setAttribute("publication-type", "journal");
+			    		
 			    		//Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)[;]\\s?(?<volume>\\d+)(?:\\((?<issue>\\d+)\\))?\\s?:(?<fpage>\\d+|[A-Za-z]+\\d+)(?:-(?<lpage>\\d+))?");
-			    		/* valid are: 
-			    		 * Author IU, Author I-U. Article Title. Journal Name. 2017.
-			    		 *                                    ...Journal Name. 2017;4:e11386.
-			    		 * ...Journal Name. 2017;4(3):152-159.
-			    		 * Most whitespaces are ignored
-			    		 * */
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?;?\\s*?(?:(?<volume>\\d+))?(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[\\-\\–](?<lpage>\\d+))?\\.");
+			    		
+			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?;?\\s*?(?:(?<volume>\\d+))?(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
 				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
 			    		journalParsing(document, elementCitation, m4);
 			    		
-			    	} // end of separate journal/book/conference parsing
+			    	} */ 
 			    	
 			    	 /* pattern for DOI, PMID or URL */
-			    	Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:))\\s*?(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
+			    	Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)|[ ])[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
 			    	Matcher urlType = pattern.matcher(references.item(j).getTextContent());
 	    			linksParsing(document, elementCitation, urlType);
 			    	
@@ -222,6 +253,17 @@ public class transformerBiblAMA {
 				conf_loc.setTextContent(m4.group("country").trim());
 				elementCitation.appendChild(conf_loc);
 			} 
+			
+			Element conf_date = document.createElement("conf-date");
+			if (m4.group("confdate") != null) {
+				conf_date.setTextContent(m4.group("confdate").trim());
+				elementCitation.appendChild(conf_date);
+			}
+			Element year = document.createElement("year");
+			if (m4.group("year") != null) {
+				year.setTextContent(m4.group("year").trim());
+				elementCitation.appendChild(year);
+			}
 		}
 	}
 
@@ -309,5 +351,4 @@ public class transformerBiblAMA {
 			}
 		}
 	}
-
 }

@@ -191,7 +191,6 @@ public class transformerMeta extends docIngestion {
 		/* add translated abstract node */
 		Element articleTransAbstract = document.createElement("trans-abstract");
 		articleTransAbstract.setAttribute("xml:lang", "uk");
-		articleTransAbstract.setTextContent(" ");
 		articleMeta.appendChild(articleTransAbstract);
 		
 		/* add kwd-group node, title and keywords */
