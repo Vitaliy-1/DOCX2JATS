@@ -6,10 +6,17 @@
          xml:lang="uk">
    <front>
       <journal-meta>
+<<<<<<< HEAD
          <journal-id journal-id-type="publisher"> </journal-id>
          <issn> </issn>
          <publisher>
             <publisher-name> </publisher-name>
+=======
+         <journal-id journal-id-type="publisher">Psychosomatic Medicine and General Practice</journal-id>
+         <issn>2519-8572</issn>
+         <publisher>
+            <publisher-name>Private Publisher 'Chaban O. S.'</publisher-name>
+>>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          </publisher>
       </journal-meta>
       <article-meta>
@@ -144,7 +151,11 @@
                </caption>
                <graphic xlink:href="https://e-medjournal.com/suppl/"/>
             </fig>
+<<<<<<< HEAD
             <p>The amplitude of the negative N2 component in the anxiety group (-6.54 ± 2.261 μV) had more negative values than in the asthenia group (-1.23 ± 1.644 μV) (U [<xref ref-type="bibr" rid="bib15">15</xref>] = 0; p &lt;0.001). The temporal indices of the ERP, such as the intervals P1N1 and P3N4, were smaler than in the asthenia group. Thus, the values of the P1N1 interval in the anxiety group were 31.0 ± 12.76 ms, and in the asthenia group they were 47.7 ± 17.94 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref>] = 50, p &lt;0.05). And the interval of the later P3N4 complex in the anxiety group was longer than in the early complexes and equaled 126.0 ± 12.68 ms, which was less than in the asthenia group 139.0 ± 11.43 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref> ] = 62.5, p &lt;0.05). </p>
+=======
+            <p>The amplitude of the negative N2 component in the anxiety group (-6.54 ± 2.261 μV) had more negative values than in the asthenia group (-1.23 ± 1.644 μV) (U [<xref ref-type="bibr" rid="bib15">15</xref>] = 0; p &lt;0.001). The temporal indices of the ERP, such as the intervals P1N1 and P3N4, were smaler than in the asthenia group. Thus, the values of the P1N1 interval in the anxiety group were 31.0 ± 12.76 ms, and in the asthenia group they were 47.7 ± 17.94 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref>] = 50, p &lt;0.05). And the interval of the later P3N4 complex  in the anxiety group was longer than in the early complexes and equaled 126.0 ± 12.68 ms, which was less than in the asthenia group 139.0 ± 11.43 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref> ] = 62.5, p &lt;0.05). </p>
+>>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          </sec>
          <sec>
             <title>ERP in asthenia and anxiety groups compared to the control group </title>
@@ -158,7 +169,11 @@
                </caption>
                <graphic xlink:href="https://e-medjournal.com/suppl/"/>
             </fig>
+<<<<<<< HEAD
             <p>The interval of late N2P3 components in the anxiety group was 103.0 ± 24.09 ms, and in the CG it was 150.0 ± 48.812 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In addition to the P1N1 interval in the anxiety group, significant differences from the CG showed the P1N1 amplitude swing, which was 31.0 ± 12.76 μV, whereas in the CG it was 6.39 ± 1.110 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 50; P &lt;0.001). Among the indicators of the ERP were also those that had statistically significant differences from CG in both groups. </p>
+=======
+            <p>The interval of late N2P3 components in the anxiety group was 103.0 ± 24.09 ms, and in the CG it was 150.0 ± 48.812 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In addition to the P1N1 interval in the anxiety group, significant differences from the CG showed the  P1N1 amplitude swing, which was 31.0 ± 12.76 μV, whereas in the CG it was 6.39 ± 1.110 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 50; P &lt;0.001). Among the indicators of the ERP were also those that had statistically significant differences from CG in both groups. </p>
+>>>>>>> 4309920016f4202104decd8ccee450acebac3c62
             <fig id="fig5">
                <object-id pub-id-type="doi"/>
                <label>Figure 5</label>
@@ -216,7 +231,11 @@
          </fn>
       </fn-group>
       <ref-list>
+<<<<<<< HEAD
          <title>References</title>
+=======
+         <title>References (Список використаної літератури)</title>
+>>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          <ref id="bib1">
             <element-citation publication-type="journal">
                <person-group person-group-type="author">
