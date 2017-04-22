@@ -13,4 +13,4 @@ Downloads docx file, unpacks it to default users' temp directory, parses OOXML a
 
 ## How to use?
 Download and unpack the latest release: https://github.com/Vitaliy-1/DOCX2JATS/releases and
-run as executable jar file. Please note that jar file must be in one parent directory with stylesheets folder and jar file must be executed from this (parent) folder. 
+run as executable jar file. Please note that jar file and article docx file must be in one parent directory with stylesheets folder.
