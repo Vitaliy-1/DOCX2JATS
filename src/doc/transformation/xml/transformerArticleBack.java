@@ -1,5 +1,13 @@
 package doc.transformation.xml;
 
+/**
+ * @file /src/doc/transformation/xml/transformerAbstractBack.java
+ *
+ * Copyright (c) 2017 Vitaliy Bezsheiko
+ * 
+ * Distributed under the GNU GPL v3.
+ */
+
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -11,7 +19,7 @@ import org.w3c.dom.Node;
 
 public class transformerArticleBack {
 	
-   static void transformerArticleBack (Document document) throws XPathExpressionException {
+   static void transformerArticleBackMethod (Document document) throws XPathExpressionException {
 		
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		
@@ -35,7 +43,7 @@ public class transformerArticleBack {
 		Element reflist = document.createElement("ref-list");
 		articleBack.appendChild(reflist);
 		Element refTitle = document.createElement("title");
-		refTitle.setTextContent("References (Список використаної літератури)");
+		refTitle.setTextContent("References");
 		reflist.appendChild(refTitle);
 		
 	 }

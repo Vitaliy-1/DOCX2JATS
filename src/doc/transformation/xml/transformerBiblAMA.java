@@ -1,5 +1,13 @@
 package doc.transformation.xml;
 
+/**
+ * @file /src/doc/transformation/xml/transformerBiblAMA.java
+ *
+ * Copyright (c) 2017 Vitaliy Bezsheiko
+ * 
+ * Distributed under the GNU GPL v3.
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,14 +30,16 @@ public class transformerBiblAMA {
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		
 		NodeList articleSectionTitles = (NodeList) xPath.compile("/article/body/sec/title/text()").evaluate(document, XPathConstants.NODESET);
+		String referenceMsg = "Reference list cannot be found\nPlease indicate it explicitly as section with name \"References\" in the docx file";
+		System.out.println();
 		for (int i = 0; i<articleSectionTitles.getLength(); i++) {
 			Text articleSectionTitle = (Text) articleSectionTitles.item(i);
-			Pattern k1 = Pattern.compile("[Rr]eference|(?=.*?[Сc]писок)(?=.*?літератури).*$");
+			Pattern k1 = Pattern.compile("(?i)reference|(?=.*?[Сc]писок)(?=.*?літератури).*$");
 			Matcher m1 = k1.matcher(articleSectionTitle.getTextContent());
 			if (m1.find()) {
+				referenceMsg = "reference list has been found";
 			    Node internal = articleSectionTitle.getParentNode();
 			    Node List = customMethods.getNextElement(internal);
-			    //NodeList references = List.getChildNodes();
 			    NodeList references = (NodeList) xPath.evaluate("list-item", List, XPathConstants.NODESET);
 			    for (int j = 0; j<references.getLength(); j++) {
 			    	int p = j + 1;
@@ -51,12 +61,12 @@ public class transformerBiblAMA {
 			    	Pattern k2add = Pattern.compile("(?:\\G|^)[^.]+?(?<givenNames>\\b([A-Z\\-]{1,6})\\b)"); //all author initialls before first dot
 			    	Matcher m2add = k2add.matcher(references.item(j).getTextContent());
 			    	
-			    	Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before forst dot
+			    	Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before first dot
 			    	Matcher m2 = k2.matcher(references.item(j).getTextContent());
 			    	
 			    	authorsParsing(document, personGroup, m2add, m2);
 			    	
-			    	// patterns for journals. TODO pattern for books, chapters and conferences
+			    	// regex patterns for chapter, conference, book and journal 
 			        Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
 				    int mChapterCount = customMethods.groupNotNullCount(pChapter.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
 				    
@@ -131,8 +141,10 @@ public class transformerBiblAMA {
 			    
 			    Node secReferences = internal.getParentNode();
 			    secReferences.getParentNode().removeChild(secReferences);
-			}
-		}	             
+			} 
+		}
+		System.out.println(referenceMsg);
+		System.out.println();
  	}
 
 	private static void authorsParsing(Document document, Element personGroup, Matcher m2add, Matcher m2)
@@ -148,10 +160,16 @@ public class transformerBiblAMA {
 		    		Element givenNames = document.createElement("given-names");
 		    		name.appendChild(givenNames);
 		    		String[] namesOrSurnames = articleNames[y].trim().split(" ", 2);
-		    		for (int yy=0; yy < namesOrSurnames.length; yy++) {
-			    		givenNames.setTextContent(namesOrSurnames[1].trim());
-		                surname.setTextContent(namesOrSurnames[0].trim());
-		    		}
+		    		try {
+						for (int yy=0; yy < namesOrSurnames.length; yy++) {
+							givenNames.setTextContent(namesOrSurnames[1].trim());
+						    surname.setTextContent(namesOrSurnames[0].trim());
+						}
+					} catch (Exception e) {
+						System.err.println("Notice: please check authors names in reference list item - " + m2.group());
+						System.err.println("This name cannot be parsed: " + articleNames[y]);
+						System.err.println();
+					}
 				}
 			}
 		} else {
@@ -181,12 +199,18 @@ public class transformerBiblAMA {
 					elementCitation.appendChild(authorName);
 					String author = authors[i].trim();
 					String[] name = author.split("\\s", 2);
-				    for (int j = 0; j < name.length; j++) {
-				    	surname.setTextContent(name[0].trim());
-				    	authorName.appendChild(surname);
-				    	given_names.setTextContent(name[1].trim());
-				    	authorName.appendChild(given_names);
-				    }
+				    try {
+						for (int j = 0; j < name.length; j++) {
+							surname.setTextContent(name[0].trim());
+							authorName.appendChild(surname);
+							given_names.setTextContent(name[1].trim());
+							authorName.appendChild(given_names);
+						}
+					} catch (Exception e) {
+						System.err.println("Notice: please check editors names in reference list item - " + m4.group());
+						System.err.println("This name cannot be parsed: " + authors[i].trim());
+						System.err.println();
+					}
 				}
 			} // end of names count
 			

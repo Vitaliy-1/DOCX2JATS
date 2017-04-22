@@ -1,5 +1,13 @@
 package doc.transformation.xml;
 
+/**
+ * @file /src/doc/transformation/xml/transformerInTextCit.java
+ *
+ * Copyright (c) 2017 Vitaliy Bezsheiko
+ * 
+ * Distributed under the GNU GPL v3.
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

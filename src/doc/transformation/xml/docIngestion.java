@@ -1,5 +1,13 @@
 package doc.transformation.xml;
 
+/**
+ * @file /src/doc/transformation/xml/docIngestion.java
+ *
+ * Copyright (c) 2017 Vitaliy Bezsheiko
+ * 
+ * Distributed under the GNU GPL v3.
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,8 +38,11 @@ import org.xml.sax.SAXException;
  
 public class docIngestion {
  
-    public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException, CustomExceptions {
     	String docxInputFile = args[0];
+    	if (!(docxInputFile.endsWith("docx"))) {
+    		throw new CustomExceptions("Input file extension must be .docx");
+    	}
     	String newJATSOutput = args[1];
     	
     	ingestionAndTransform(docxInputFile, newJATSOutput);
@@ -41,7 +52,35 @@ public class docIngestion {
 	private static void ingestionAndTransform(String docxInputFile, String newJATSOutput)
 			throws TransformerFactoryConfigurationError, TransformerConfigurationException, TransformerException,
 			XPathExpressionException, FileNotFoundException {
-		File buildFile = new File("stylesheets/docx/build-from.xml");
+		
+		/* Fixing path. Really don't know
+		 * how to do it with apache ant 
+		 */
+		
+		// fixing filepath to build.from.xsl
+		String fixFilePath = "";
+		
+		// fixing filepath to tei.xsl
+		String FixPathNlm = "";
+		
+    	
+		if (docxInputFile.contains("/")) {
+			fixFilePath = docxInputFile.replaceAll("\\/\\w+.docx$", "/");
+		} else if (docxInputFile.contains("\\")) {
+			fixFilePath = (docxInputFile.replaceAll("\\\\\\w+.docx$", "/")).replace("\\", "/");
+		}
+		if (docxInputFile.contains("\\")) {
+			FixPathNlm = docxInputFile;
+			docxInputFile = "../../" + docxInputFile.replaceAll(".*(?=\\\\\\w+.docx$)", "");
+		} else if (docxInputFile.contains("/")) {
+			FixPathNlm = docxInputFile;
+			docxInputFile = "../../" + docxInputFile.replaceAll(".*(?=\\/\\w+.docx$)", "");
+		} else {
+			docxInputFile = "../../" + docxInputFile;
+		}
+    	
+    	
+		File buildFile = new File(fixFilePath + "stylesheets/docx/build-from.xml");
     	Project project = new Project();
     		
     	project.setUserProperty("ant.file", buildFile.getAbsolutePath());     
@@ -51,7 +90,6 @@ public class docIngestion {
     	consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
     	project.addBuildListener(consoleLogger);
     	String teiOutput = "../temp/tei.xml";
-    	
     	try {
     	    project.fireBuildStarted();
     	    project.init();
@@ -66,6 +104,8 @@ public class docIngestion {
     	    
     	    project.executeTarget(project.getDefaultTarget());
     	    project.fireBuildFinished(null);
+    	    
+    	   
     	} catch (BuildException e) {
     	    project.fireBuildFinished(e);
     	}
@@ -74,15 +114,20 @@ public class docIngestion {
         
     	System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
     	TransformerFactory tFactory = TransformerFactory.newInstance();
-    	
     	DOMResult teiResult = new DOMResult();
-        Transformer transformer = tFactory.newTransformer(new StreamSource(new File("stylesheets/nlm/tei_to_nlm.xsl")));
-        transformer.transform(new StreamSource(new File("stylesheets/temp/" + teiOutput)),
+    	if (FixPathNlm.contains("/")) {
+    		FixPathNlm = FixPathNlm.replaceAll("\\/\\w+.docx$", "/");
+		} else if (FixPathNlm.contains("\\")) {
+			FixPathNlm = FixPathNlm.replaceAll("\\\\\\w+.docx$", "\\\\");
+		}
+    	
+        Transformer transformer = tFactory.newTransformer(new StreamSource(new File(FixPathNlm + "stylesheets/nlm/tei_to_nlm.xsl")));
+        transformer.transform(new StreamSource(new File(FixPathNlm + "stylesheets/temp/" + teiOutput)),
                               teiResult);
     
     	Document document = (Document) teiResult.getNode();
 	            
-	    transformerArticleBack.transformerArticleBack(document);
+	    transformerArticleBack.transformerArticleBackMethod(document);
 	    transformerBiblAMA.transformerBiblFinder(document);
 	    transformerFigures.transformerFiguresImpl(document);
 	    transformerTables.transformerTablesImpl(document);

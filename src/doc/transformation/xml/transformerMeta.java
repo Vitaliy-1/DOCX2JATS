@@ -1,5 +1,13 @@
 package doc.transformation.xml;
 
+/**
+ * @file /src/doc/transformation/xml/transformerMeta.java
+ *
+ * Copyright (c) 2017 Vitaliy Bezsheiko
+ * 
+ * Distributed under the GNU GPL v3.
+ */
+
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -19,17 +27,17 @@ public class transformerMeta extends docIngestion {
 		
 		/* adding Journal-Id */
 	    Node journalIdValue = (Node) xPath.compile("/article/front/journal-meta/journal-id").evaluate(document, XPathConstants.NODE);
-	    Text textJournalId = document.createTextNode("Psychosomatic Medicine and General Practice");
+	    Text textJournalId = document.createTextNode(" ");
 	    journalIdValue.appendChild(textJournalId);
 	    
 	    /* adding ISSN */
 	    Node journalIssn = (Node) xPath.compile("/article/front/journal-meta/issn").evaluate(document, XPathConstants.NODE);
-	    Text textJournalIssn = document.createTextNode("2519-8572");
+	    Text textJournalIssn = document.createTextNode(" ");
 	    journalIssn.appendChild(textJournalIssn);    
 	    
 	    /* adding publisher name */
 	    Node publisherName = (Node) xPath.compile("/article/front/journal-meta/publisher/publisher-name").evaluate(document, XPathConstants.NODE);
-	    Text textPublisherName = document.createTextNode("Private Publisher 'Chaban O. S.'");
+	    Text textPublisherName = document.createTextNode(" ");
 	    publisherName.appendChild(textPublisherName);
 	       
 	    /* adding article-id */
