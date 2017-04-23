@@ -13,4 +13,6 @@ Downloads docx file, unpacks it to default users' temp directory, parses OOXML a
 
 ## How to use?
 Download and unpack the latest release: https://github.com/Vitaliy-1/DOCX2JATS/releases and
-run as executable jar file. Please note that jar file must be in one parent directory with stylesheets folder and jar file must be executed from this (parent) folder. 
+run as executable jar file. Please note that jar file and article docx file must be in one parent directory with stylesheets folder.
+Archive contains 1.jar file and stylesheets folder, which need to be unziped into one directory. Because I am not good programmer, there is a need to place article in docx format in this folder before making transformation. Suppose archive is unzipped on the drive C in the jats folder. Input article article1.docx is also situated there. From windows cmd user need to go to this folder and enter:
+`java -jar 1.jar article1.docx article1.xml`
