@@ -34,118 +34,103 @@ public class transformerBiblAMA {
 		System.out.println();
 		for (int i = 0; i<articleSectionTitles.getLength(); i++) {
 			Text articleSectionTitle = (Text) articleSectionTitles.item(i);
-			Pattern k1 = Pattern.compile("(?i)reference|(?=.*?[Сc]писок)(?=.*?літератури).*$");
-			Matcher m1 = k1.matcher(articleSectionTitle.getTextContent());
-			if (m1.find()) {
+			Pattern k1 = Pattern.compile("reference|[Сс]писок\\s*(?:використаної)?[ ]літератури", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+			Matcher mSecTitle = k1.matcher(articleSectionTitle.getTextContent().trim());
+			if (mSecTitle.find()) {
 				referenceMsg = "reference list has been found";
-			    Node internal = articleSectionTitle.getParentNode();
-			    Node List = customMethods.getNextElement(internal);
-			    NodeList references = (NodeList) xPath.evaluate("list-item", List, XPathConstants.NODESET);
-			    for (int j = 0; j<references.getLength(); j++) {
-			    	int p = j + 1;
-			    	Element ref = document.createElement("ref");
-			    	ref.setAttribute("id", "bib" + p);
-			    	Node reflist = (Node) xPath.compile("/article/back/ref-list").evaluate(document, XPathConstants.NODE);
-			    	reflist.appendChild(ref);
-			    	Element elementCitation = document.createElement("element-citation");
-			    	ref.appendChild(elementCitation);
-			    	// TODO set attribute to element-citation
-			    	Element personGroup = document.createElement("person-group");
-			    	personGroup.setAttribute("person-group-type", "author");
-			    	elementCitation.appendChild(personGroup);
-			    	
-			    	/* Patterns for matching authors names 
-			    	 * check if there is authors initials and add authors surnames and given-names
-			    	 * else treat as collaboration group
-			    	 * */
-			    	Pattern k2add = Pattern.compile("(?:\\G|^)[^.]+?(?<givenNames>\\b([A-Z\\-]{1,6})\\b)"); //all author initialls before first dot
-			    	Matcher m2add = k2add.matcher(references.item(j).getTextContent());
-			    	
-			    	Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before first dot
-			    	Matcher m2 = k2.matcher(references.item(j).getTextContent());
-			    	
-			    	authorsParsing(document, personGroup, m2add, m2);
-			    	
-			    	// regex patterns for chapter, conference, book and journal 
-			        Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
-				    int mChapterCount = customMethods.groupNotNullCount(pChapter.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
-				    
-			    	Pattern pConference = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);[ ]*(?:(?<confdate>\\w+[ ]*\\d+),)?[ ]*(?<year>\\d+)\\.[ ]*(?:(?<city>\\w+)?)[, ]*(?<country>\\w+)");
-				    int mConferenceCount = customMethods.groupNotNullCount(pConference.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
-				    				    		
-			    	Pattern pBook = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
-				    int mBookCount = customMethods.groupNotNullCount(pBook.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));   
-			    	
-			    	Pattern pJournal = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?[;.]\\s*?(?:(?<volume>\\d+))?[ ]*(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
-				    Matcher mJournal = pJournal.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", ""));
-				    int mJournalCount = customMethods.groupNotNullCount(mJournal);
-				    //System.out.println(j + 1 + "------Chapter: " + mChapterCount + "--Conferece: " + mConferenceCount + "--Book: " + mBookCount + "--Journal: " + mJournalCount);
-				    /* valid are: 
-		    		 * Author IU, Author I-U. Article Title. Journal Name. 2017.
-		    		 *                                    ...Journal Name. 2017;4:e11386.
-		    		 * ...Journal Name. 2017;4(3):152-159.
-		    		 * Most whitespaces are ignored
-		    		 * */
-			    					    	
-		    	    if ((mConferenceCount >= mChapterCount) && (mConferenceCount >= mBookCount) && (mConferenceCount >= mJournalCount)) {
-		    	    	elementCitation.setAttribute("publication-type", "conference");
-		    	    	conferenceParsing(document, elementCitation, pConference.matcher(references.item(j).getTextContent()));
-		    	    } else if ((mBookCount >= mChapterCount) && (mBookCount >= mJournalCount)) {
-		    	    	elementCitation.setAttribute("publication-type", "book");
-		    	    	bookParsing(document, elementCitation, pBook.matcher(references.item(j).getTextContent()));
-		    	    } else if (mChapterCount >= mJournalCount) {
-		    	    	elementCitation.setAttribute("publication-type", "chapter");
-		    	    	chapterParsing(document, elementCitation, pChapter.matcher(references.item(j).getTextContent()));
-		            } else {
-		    	    	elementCitation.setAttribute("publication-type", "journal");
-		    	    	journalParsing(document, elementCitation,pJournal.matcher(references.item(j).getTextContent()));
-		    	    }
-			    
-		    	   
-			    	/*
-			    	if (references.item(j).getTextContent().contains("[cha")) {
-			    		elementCitation.setAttribute("publication-type", "chapter");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
-				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
-			    		chapterParsing(document, elementCitation, m4);
-			    		
-			    	} else if (references.item(j).getTextContent().contains("[con")) {
-			    		elementCitation.setAttribute("publication-type", "conference");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);\\s*?(?:.*?,)?(?:\\s*?(?<year>\\d+))?\\.?\\s*?(?:(?<city>.*?),)?(?:(?<country>.*?)\\.)?");
-				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
-				    	conferenceParsing(document, elementCitation, m4);
-				    	
-			    	} else if (references.item(j).getTextContent().contains("[book]")) {
-			    		elementCitation.setAttribute("publication-type", "book");
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
-				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
-			    		bookParsing(document, elementCitation, m4);
-			    		
-			    	} else {
-			    		elementCitation.setAttribute("publication-type", "journal");
-			    		
-			    		//Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)[;]\\s?(?<volume>\\d+)(?:\\((?<issue>\\d+)\\))?\\s?:(?<fpage>\\d+|[A-Za-z]+\\d+)(?:-(?<lpage>\\d+))?");
-			    		
-			    		Pattern k4 = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?;?\\s*?(?:(?<volume>\\d+))?(?:\\((?<issue>\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
-				    	Matcher m4 = k4.matcher(references.item(j).getTextContent());
-			    		journalParsing(document, elementCitation, m4);
-			    		
-			    	} */ 
-			    	
-			    	 /* pattern for DOI, PMID or URL */
-			    	Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)|[ ])[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
-			    	Matcher urlType = pattern.matcher(references.item(j).getTextContent());
-	    			linksParsing(document, elementCitation, urlType);
-			    	
-			    }   
-			    
-			    Node secReferences = internal.getParentNode();
-			    secReferences.getParentNode().removeChild(secReferences);
-			} 
+			    referenceParsing(document, xPath, articleSectionTitle);
+			}
+		}
+		NodeList articleSubSectionTitles = (NodeList) xPath.compile("/article/body/sec/sec/title/text()").evaluate(document, XPathConstants.NODESET);
+		for (int i = 0; i<articleSubSectionTitles.getLength(); i++) {
+			Text articleSubSectionTitle = (Text) articleSubSectionTitles.item(i);
+			Pattern k1 = Pattern.compile("reference|[Сс]писок\\s*(?:використаної)?[ ]літератури", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+			Matcher mSecTitle = k1.matcher(articleSubSectionTitle.getTextContent().trim());
+			if (mSecTitle.find()) {
+				referenceMsg = "reference list has been found";
+			    referenceParsing(document, xPath, articleSubSectionTitle);
+			}
 		}
 		System.out.println(referenceMsg);
 		System.out.println();
  	}
+
+	private static void referenceParsing(Document document, XPath xPath, Text articleSectionTitle)
+			throws XPathExpressionException, DOMException {
+		Node internal = articleSectionTitle.getParentNode();
+		Node List = customMethods.getNextElement(internal);
+		NodeList references = (NodeList) xPath.evaluate("list-item", List, XPathConstants.NODESET);
+		for (int j = 0; j<references.getLength(); j++) {
+			int p = j + 1;
+			Element ref = document.createElement("ref");
+			ref.setAttribute("id", "bib" + p);
+			Node reflist = (Node) xPath.compile("/article/back/ref-list").evaluate(document, XPathConstants.NODE);
+			reflist.appendChild(ref);
+			Element elementCitation = document.createElement("element-citation");
+			ref.appendChild(elementCitation);
+			// TODO set attribute to element-citation
+			Element personGroup = document.createElement("person-group");
+			personGroup.setAttribute("person-group-type", "author");
+			elementCitation.appendChild(personGroup);
+			
+			/* Patterns for matching authors names 
+			 * check if there is authors initials and add authors surnames and given-names
+			 * else treat as collaboration group
+			 * */
+			Pattern k2add = Pattern.compile("(?:\\G|^)[^.]+?(?<givenNames>\\b([A-Z\\-]{1,6})\\b)"); //all author initialls before first dot
+			Matcher m2add = k2add.matcher(references.item(j).getTextContent());
+			
+			Pattern k2 = Pattern.compile("(.*?)(?:\\[.*\\])?\\.(.*?).*"); // Assume that all authors are before first dot
+			Matcher m2 = k2.matcher(references.item(j).getTextContent());
+			
+			authorsParsing(document, personGroup, m2add, m2);
+			
+			// regex patterns for chapter, conference, book and journal 
+		    Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
+		    int mChapterCount = customMethods.groupNotNullCount(pChapter.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
+		    
+			Pattern pConference = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);[ ]*(?:(?<confdate>\\w+[ ]*\\d+),)?[ ]*(?<year>\\d+)\\.[ ]*(?:(?<city>\\w+)?)[, ]*(?<country>\\w+)");
+		    int mConferenceCount = customMethods.groupNotNullCount(pConference.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
+		    				    		
+			Pattern pBook = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
+		    int mBookCount = customMethods.groupNotNullCount(pBook.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));   
+			
+			Pattern pJournal = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?[;.]\\s*?(?:(?<volume>\\d+))?[ ]*(?:\\((?<issue>\\d+|\\d+\\s*[-,–]\\s*\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
+		    Matcher mJournal = pJournal.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", ""));
+		    int mJournalCount = customMethods.groupNotNullCount(mJournal);
+		    //System.out.println(j + 1 + "------Chapter: " + mChapterCount + "--Conferece: " + mConferenceCount + "--Book: " + mBookCount + "--Journal: " + mJournalCount);
+		    /* valid are: 
+			 * Author IU, Author I-U. Article Title. Journal Name. 2017.
+			 *                                    ...Journal Name. 2017;4:e11386.
+			 * ...Journal Name. 2017;4(3):152-159.
+			 * Most whitespaces are ignored
+			 * */
+							    	
+		    if ((mConferenceCount >= mChapterCount) && (mConferenceCount >= mBookCount) && (mConferenceCount >= mJournalCount)) {
+		    	elementCitation.setAttribute("publication-type", "conference");
+		    	conferenceParsing(document, elementCitation, pConference.matcher(references.item(j).getTextContent()));
+		    } else if ((mBookCount >= mChapterCount) && (mBookCount >= mJournalCount)) {
+		    	elementCitation.setAttribute("publication-type", "book");
+		    	bookParsing(document, elementCitation, pBook.matcher(references.item(j).getTextContent()));
+		    } else if (mChapterCount >= mJournalCount) {
+		    	elementCitation.setAttribute("publication-type", "chapter");
+		    	chapterParsing(document, elementCitation, pChapter.matcher(references.item(j).getTextContent()));
+		    } else {
+		    	elementCitation.setAttribute("publication-type", "journal");
+		    	journalParsing(document, elementCitation,pJournal.matcher(references.item(j).getTextContent()));
+		    }
+		
+		   
+			 /* pattern for DOI, PMID or URL */
+			Pattern pattern = Pattern.compile("(?i)(?<=(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)|[ ])[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))");
+			Matcher urlType = pattern.matcher(references.item(j).getTextContent());
+			linksParsing(document, elementCitation, urlType);
+			
+		}   
+		
+		Node secReferences = internal.getParentNode();
+		secReferences.getParentNode().removeChild(secReferences);
+	}
 
 	private static void authorsParsing(Document document, Element personGroup, Matcher m2add, Matcher m2)
 			throws DOMException {

@@ -12,7 +12,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.security.CodeSource;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -38,7 +42,7 @@ import org.xml.sax.SAXException;
  
 public class docIngestion {
  
-    public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException, CustomExceptions {
+    public static void main(String[] args) throws XPathExpressionException, TransformerFactoryConfigurationError, TransformerException, IOException, ParserConfigurationException, SAXException, CustomExceptions, URISyntaxException {
     	String docxInputFile = args[0];
     	if (!(docxInputFile.endsWith("docx"))) {
     		throw new CustomExceptions("Input file extension must be .docx");
@@ -51,36 +55,28 @@ public class docIngestion {
 
 	private static void ingestionAndTransform(String docxInputFile, String newJATSOutput)
 			throws TransformerFactoryConfigurationError, TransformerConfigurationException, TransformerException,
-			XPathExpressionException, FileNotFoundException {
+			XPathExpressionException, FileNotFoundException, URISyntaxException {
 		
 		/* Fixing path. Really don't know
 		 * how to do it with apache ant 
 		 */
+		CodeSource codeSource = docIngestion.class.getProtectionDomain().getCodeSource();
+		File jarFile = new File(codeSource.getLocation().toURI().getPath());
+		String jarDir = jarFile.getParentFile().getPath();
 		
-		// fixing filepath to build.from.xsl
-		String fixFilePath = "";
 		
 		// fixing filepath to tei.xsl
-		String FixPathNlm = "";
-		
+		Pattern p = Pattern.compile("[A-Z]:");
+		Matcher m = p.matcher(docxInputFile);
+		if (!m.find()) {
+			URL url = ClassLoader.getSystemResource(docxInputFile);
+			if (url != null) {
+			    File file = new File(url.toURI());
+			    docxInputFile = file.getAbsolutePath();
+			}
+		} 
     	
-		if (docxInputFile.contains("/")) {
-			fixFilePath = docxInputFile.replaceAll("\\/\\w+.docx$", "/");
-		} else if (docxInputFile.contains("\\")) {
-			fixFilePath = (docxInputFile.replaceAll("\\\\\\w+.docx$", "/")).replace("\\", "/");
-		}
-		if (docxInputFile.contains("\\")) {
-			FixPathNlm = docxInputFile;
-			docxInputFile = "../../" + docxInputFile.replaceAll(".*(?=\\\\\\w+.docx$)", "");
-		} else if (docxInputFile.contains("/")) {
-			FixPathNlm = docxInputFile;
-			docxInputFile = "../../" + docxInputFile.replaceAll(".*(?=\\/\\w+.docx$)", "");
-		} else {
-			docxInputFile = "../../" + docxInputFile;
-		}
-    	
-    	
-		File buildFile = new File(fixFilePath + "stylesheets/docx/build-from.xml");
+		File buildFile = new File(jarDir + "/stylesheets/docx/build-from.xml");
     	Project project = new Project();
     		
     	project.setUserProperty("ant.file", buildFile.getAbsolutePath());     
@@ -98,7 +94,6 @@ public class docIngestion {
     	   
     	    helper.parse(project, buildFile);
     	   
-    	    
     	    project.setUserProperty("inputFile", docxInputFile);
     	    project.setUserProperty("outputFile", teiOutput);
     	    
@@ -115,14 +110,9 @@ public class docIngestion {
     	System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
     	TransformerFactory tFactory = TransformerFactory.newInstance();
     	DOMResult teiResult = new DOMResult();
-    	if (FixPathNlm.contains("/")) {
-    		FixPathNlm = FixPathNlm.replaceAll("\\/\\w+.docx$", "/");
-		} else if (FixPathNlm.contains("\\")) {
-			FixPathNlm = FixPathNlm.replaceAll("\\\\\\w+.docx$", "\\\\");
-		}
     	
-        Transformer transformer = tFactory.newTransformer(new StreamSource(new File(FixPathNlm + "stylesheets/nlm/tei_to_nlm.xsl")));
-        transformer.transform(new StreamSource(new File(FixPathNlm + "stylesheets/temp/" + teiOutput)),
+        Transformer transformer = tFactory.newTransformer(new StreamSource(new File(jarDir + "/stylesheets/nlm/tei_to_nlm.xsl")));
+        transformer.transform(new StreamSource(new File(jarDir + "/stylesheets/temp/" + teiOutput)),
                               teiResult);
     
     	Document document = (Document) teiResult.getNode();
