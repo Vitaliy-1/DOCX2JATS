@@ -1,8 +1,11 @@
 # DOCX2JATS
 Java project, aimed to facilitate DOCX to JATS XML transformation for scientific articles.
+
 For now it uses [TEIC Stylesheets](https://github.com/TEIC/Stylesheets) for the hard work and Java standard library for the more subtle parsing of references, tables and figure captions etc. It is distributed under Creative Commons Attribution-ShareAlike 3.0
 Unported License.
+
 Also projects uses [saxon9he](http://saxon.sourceforge.net/) for OOXML to JATS XML transformation. It is distributed under Mozilla Public License version 1.0.
+
 In the future releases it is planned to refuse from the third party software.
 
 ## What it does?
