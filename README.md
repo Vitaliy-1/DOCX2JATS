@@ -27,4 +27,4 @@ Archive contains 1.jar file and stylesheets folder, which need to be unziped int
 From version 1.0.3 there is no need to copy input article to the folder, where is executable jar file situated. But if one points the full path to the jar file, path to the input article must also be absolute. Otherwise the programm would not find stylesheets folder, e.g.:
 `java -jar 1.jar D:\article\article1.docx article1.xml` or `jar -jar C:\DOCX2JATS\1.jar D:\article\article1.docx article1.xml` 
 
-Please not, that the user must have permissions to write the specified output folder. 
+Please not, that the user must have permissions to write to the specified output folder. 
