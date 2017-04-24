@@ -14,7 +14,7 @@ Downloads docx file, unpacks it to default users' temp directory, parses OOXML a
 2. Bibliography as separete list at the end of the documens. Title for bibliography should be explicitly pointed as "references" or "список використаної літератури". 
 3. In-text citations should be pointed as [1], [2] or [3,4,5]. For now are supported only citations in square brackets.
 4. In-text references for tables and figures are parsed if they mark as "tabl 1.", "table 1", "fig. 1", "figure" or cyrillic analogs.
-5. Table and Figure titles for parsing are needed to be situated right above the table or figure. Example: "Table 1. Example table title". For captions there is a need to place them after table and figure and start caption with `*`. Example: `* This table caption that will be parsed`
+5. Table and Figure titles for parsing are needed to be situated right above the table or figure. Example: "Table 1. Example table title". For captions there is a need to place them after table and figure and start caption with `*`. Example: `* This table caption will be parsed`
 6. For best result bibliography list should be written in AMA or Vancouver citation style. Supports journal articles, books, chapters and conferences. 
 7. Examples of well-formed docx files for parsing are presened in the root directory of the project (article1.docx, article2.docx).
 
