@@ -1,5 +1,9 @@
 # DOCX2JATS
-Java project, aimed to facilitate DOCX to JATS XML transformation for scientific articles
+Java project, aimed to facilitate DOCX to JATS XML transformation for scientific articles.
+For now it uses [TEIC Stylesheets](https://github.com/TEIC/Stylesheets) for the hard work and Java standard library for the more subtle parsing of references, tables and figure captions etc. It is distributed under Creative Commons Attribution-ShareAlike 3.0
+Unported License.
+Also projects uses [saxon9he](http://saxon.sourceforge.net/) for OOXML to JATS XML transformation. It is distributed under Mozilla Public License version 1.0.
+In the future releases it is planned to refuse from the third party software.
 
 ## What it does?
 Downloads docx file, unpacks it to default users' temp directory, parses OOXML and transformes it to JATS XML. For the best result docx document should include good markup: 
@@ -16,3 +20,8 @@ Download and unpack the latest release: https://github.com/Vitaliy-1/DOCX2JATS/r
 run as executable jar file. Please note that jar file and article docx file must be in one parent directory with stylesheets folder.
 Archive contains 1.jar file and stylesheets folder, which need to be unziped into one directory. Because I am not good programmer, there is a need to place article in docx format in this folder before making transformation. Suppose archive is unzipped on the drive C in the jats folder. Input article article1.docx is also situated there. From windows cmd user need to go to this folder and enter:
 `java -jar 1.jar article1.docx article1.xml`
+
+From version 1.0.3 there is no need to copy input article to the folder, where is executable jar file situated. But if one points the full path to the jar file, path to the input article must also be absolute. Otherwise the programm would not find stylesheets folder, e.g.:
+`java -jar 1.jar D:\article\article1.docx article1.xml` or `jar -jar C:\DOCX2JATS\1.jar D:\article\article1.docx article1.xml` 
+
+Please not, that the user must have permissions to write the specified output folder. 
