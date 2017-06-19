@@ -6,64 +6,118 @@
          xml:lang="uk">
    <front>
       <journal-meta>
-<<<<<<< HEAD
-         <journal-id journal-id-type="publisher"> </journal-id>
-         <issn> </issn>
-         <publisher>
-            <publisher-name> </publisher-name>
-=======
          <journal-id journal-id-type="publisher">Psychosomatic Medicine and General Practice</journal-id>
          <issn>2519-8572</issn>
          <publisher>
             <publisher-name>Private Publisher 'Chaban O. S.'</publisher-name>
->>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          </publisher>
       </journal-meta>
       <article-meta>
-         <article-id pub-id-type="publisher-id"> </article-id>
-         <article-id pub-id-type="other"/>
+         <article-id pub-id-type="publisher-id">26</article-id>
+         <article-id pub-id-type="other">612.821.1</article-id>
          <article-categories>
             <subj-group>
-               <subject/>
+               <subject>Neuroscience</subject>
+			   <subject>Psychiatry</subject>
             </subj-group>
          </article-categories>
          <title-group>
-            <article-title/>
-            <article-title xml:lang="uk-UA"> </article-title>
+            <article-title>Evaluation of the evoked brain potentials of patients with asthenia and anxiety symptoms and the partial loss of sight</article-title>
+            <article-title xml:lang="uk-UA">Оцінка викликаних потенціалів мозку у хворих із симптомами астенії і тривоги та парціальною втратою зору</article-title>
          </title-group>
          <contrib-group>
             <contrib contrib-type="author">
                <name name-style="western">
-                  <surname> </surname>
-                  <given-names> </given-names>
+                  <surname>Tsira</surname>
+                  <given-names>Abdryakhimova</given-names>
                </name>
-               <xref ref-type="aff" rid="aff1"> </xref>
+               <xref ref-type="aff" rid="aff1">1</xref>
                <xref ref-type="fn" rid="conf1"/>
                <xref ref-type="corresp" rid="cor1"/>
             </contrib>
+			<contrib contrib-type="author">
+               <name name-style="western">
+                  <surname>Rostislav</surname>
+                  <given-names>Abdryakhimov</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff2">2</xref>
+               <xref ref-type="fn" rid="conf1"/>
+               
+            </contrib>
+			<contrib contrib-type="author">
+               <name name-style="western">
+                  <surname>Andriy</surname>
+                  <given-names>Snegir</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff3">3</xref>
+               <xref ref-type="fn" rid="conf1"/>
+               
+            </contrib>
+			<contrib contrib-type="author">
+               <name name-style="western">
+                  <surname>Katherine</surname>
+                  <given-names>Kleban</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff4">4</xref>
+               <xref ref-type="fn" rid="conf1"/>
+               
+            </contrib>
+			<contrib contrib-type="author">
+               <name name-style="western">
+                  <surname>Inna</surname>
+                  <given-names>Mucharovska</given-names>
+               </name>
+               <xref ref-type="aff" rid="aff4">4</xref>
+               <xref ref-type="fn" rid="conf1"/>
+               <xref ref-type="corresp" rid="cor2"/>
+            </contrib>
             <aff id="aff1">
-               <institution content-type="dept"> </institution>
+               <institution content-type="dept">Ukrainian Research Institute of Social and Forensic Psychiatry and Drug Abuse</institution>
                <addr-line>
-                  <named-content content-type="city"> </named-content>
+                  <named-content content-type="city">Kyiv</named-content>
                </addr-line>
-               <country> </country>
+               <country>Ukraine</country>
+            </aff>
+			<aff id="aff2">
+               <institution content-type="dept">Eye Microsurgery Center</institution>
+               <addr-line>
+                  <named-content content-type="city">Kyiv</named-content>
+               </addr-line>
+               <country>Ukraine</country>
+            </aff>
+			<aff id="aff3">
+               <institution content-type="dept">Donetsk National Medical University</institution>
+               <addr-line>
+                  <named-content content-type="city">Kramatorsk</named-content>
+               </addr-line>
+               <country>Ukraine</country>
+            </aff>
+			<aff id="aff4">
+               <institution content-type="dept">Bogomolets National Medical University</institution>
+               <addr-line>
+                  <named-content content-type="city">Kyiv</named-content>
+               </addr-line>
+               <country>Ukraine</country>
             </aff>
          </contrib-group>
          <author-notes>
             <corresp id="cor1">
-               <email> </email>
+               <email>tsira@ukr.net</email>
+            </corresp>
+			<corresp id="cor2">
+               <email>kuzhel.i@gmail.com</email>
             </corresp>
          </author-notes>
-         <pub-date date-type="pub" iso-8601-date="" publication-format="print">
-            <day> </day>
-            <month> </month>
-            <year> </year>
+         <pub-date date-type="pub" iso-8601-date="2017-03-31" publication-format="print">
+            <day>31</day>
+            <month>3</month>
+            <year>2017</year>
          </pub-date>
-         <volume/>
-         <issue/>
-         <elocation-id/>
+         <volume>2</volume>
+         <issue>1</issue>
+         <elocation-id>e020126</elocation-id>
          <permissions>
-            <copyright-statement>© 2017,</copyright-statement>
+            <copyright-statement>© 2017, Abdryakhimova T., et al.</copyright-statement>
             <copyright-year>2017</copyright-year>
             <copyright-holder> </copyright-holder>
             <license xlink:href="https://creativecommons.org/licenses/by/4.0/">
@@ -72,7 +126,7 @@
             </license>
          </permissions>
          <abstract abstract-type="section">
-            <sec>
+           
                <title>Abstract</title>
                <sec>
                   <title>Background </title>
@@ -84,27 +138,54 @@
                </sec>
                <sec>
                   <title>Results </title>
-                  <p>Comparative analysis of the asthenia group with the comparison group revealed a sufficient number of indicators of the ERP, which have significant statistical differences. The correctness of the sensorimotor reaction in this group was 98.3 ± 2.44%, whereas in the CG - 92.5 ± 5.74% (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 62.5, p &lt;0.01). The values of the amplitude of the early positivity of P1 in the asthenia group were 4.25 ± 3.312 μV, and in the CG -4.15 ± 7.933 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 50, p &lt;0.001). The early negativity in that group was -2.78 ± 2.377 μV, and in the CG it was 10.55 ± 7.466 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). </p>
+                  <p>Comparative analysis of the asthenia group with the comparison group revealed a sufficient number of indicators of the ERP, which have significant statistical differences. The correctness of the sensorimotor reaction in this group was 98.3 ± 2.44%, whereas in the CG - 92.5 ± 5.74% (U = 62.5, p &lt;0.01). The values of the amplitude of the early positivity of P1 in the asthenia group were 4.25 ± 3.312 μV, and in the CG -4.15 ± 7.933 μV (U = 50, p &lt;0.001). The early negativity in that group was -2.78 ± 2.377 μV, and in the CG it was 10.55 ± 7.466 μV (U = 75; p &lt;0.05).</p>
                </sec>
                <sec>
                   <title>Conclusion</title>
                   <p>In the asthenia group this is the correctness of the sensorimotor reaction and the amplitude of the components: P1, N1, P2, N2. In the anxiety group, such indicators were: latency period P1, intervals P1N1 and N2P3, amplitude swing P1N1. A specific marker of the asthenia group, distinguishing it from the CG, was the more positive values of the amplitude of the components P1, N1, P2, N2. Taking into account the low-frequency nature of the modulation of the amplitudes of these components (circa 2 Hz), it can be assumed that nonspecific brainstem systems are involved in the process.</p>
                </sec>
-            </sec>
+           
          </abstract>
-         <trans-abstract xml:lang="uk"/>
+         <trans-abstract abstract-type="section" xml:lang="uk">
+           
+               <title>Анотація</title>
+               <sec>
+                  <title>Актуальність </title>
+                  <p>Втрата зору, навіть часткова, особливо в зрілому віці, супроводжується емоційними, мотиваційними і соціальними наслідками, які безпосередньо впливають на психофізіологічний стан самої людини, його комунікації в суспільстві і, часто, соціальний статус суб'єкта.</p>
+               </sec>
+               <sec>
+                  <title>Методи та матеріали </title>
+                  <p>З групи хворих-добровольців з частковою втратою зору (n=15, всі чоловіки) травматичного генезу, були сформовані групи для проведення нейрофізіологічних досліджень. Пізніше, дві групи були сформовані з групи обстежених: с симптомами астенії і тривоги. В групу астенії була включені пацієнти з клінічним переважанням астенії, у яких були виявлені астено-депресивні і астено-іпохондричні синдроми. Групу контрою склали 20 пацієнтів (чоловіки), які відповідали за віком обстежуваним групам та не мали психічних порушень.</p>
+               </sec>
+               <sec>
+                  <title>Результати </title>
+                  <p>В результаті дослідження були виявлені унікальні електрофізіологічні маркери астенічних і тривожних груп. Для групи астенії, це був показник корректностіі сенсомоторної реакції, а також амплітуд компонентів: P1, N1, P2, N2. Для групи астенії показники були: латентний період Р1, інтервали p1n1 і N2P3, амплітуда коливання p1n1. Показники ERP, властиві для обох груп, також були визначені; вони статистично достовірно диференціювати їх від групи порівняння. У статті обговорюються нейрофізіологічні механізми, що лежать в основі зміни мозкової активності у пацієнтів з непсихотическими психічними розладами з частковою втратою зору травматичного генезу з переважанням астенічних і тривожних проявів.</p>
+               </sec>
+               <sec>
+                  <title>Висновок</title>
+                  <p>Враховуючи помічені відмінності можна зробити висновок про наявність специфічних змін у передніх та верхніх ділянках скроневої кори головного мозку, гіпокампі та інших ділянках, задіяних у підтримці активної уваги та пізньої когнітивної обробки інформації у пацієнтів із тривожними та астенічними проявами.</p>
+               </sec>
+          
+         </trans-abstract>
          <kwd-group kwd-group-type="author-keywords">
             <title>Keywords</title>
-            <kwd> </kwd>
-            <kwd> </kwd>
-            <kwd> </kwd>
-            <kwd> </kwd>
+            <kwd>loss of sight</kwd>
+            <kwd>trauma</kwd>
+            <kwd>nonpsychotic</kwd>
+            <kwd>mental disorders</kwd>
+			<kwd>asthenia</kwd>
+            <kwd>anxiety</kwd>
+            <kwd>neurophysiology</kwd>
+            <kwd>cognitive</kwd>
+			<kwd>evoked potentials</kwd>
+			<kwd>brain</kwd>
+			<kwd>sensorimotor reaction</kwd>
          </kwd-group>
       </article-meta>
    </front>
    <body>
       <sec>
-         <title>Bachground</title>
+         <title>Background</title>
          <p>The visual analyzer is the main sensory channel for humans that connects them with the environment. And therefore, loss of sight, especially in adulthood, is accompanied by emotional, motivational and social consequences that directly affect the psychophysiological state of the individual himself, his communication in society and, often, the social status of the subject [<xref ref-type="bibr" rid="bib1">1</xref>]. In 90% of cases of vision loss, this condition is accompanied by depression due to disability [<xref ref-type="bibr" rid="bib2">2</xref>], and in case of loss of sight of traumatic genesis, this process is further exacerbated by negative psychopathological manifestations, caused by the additional aggravating effect of posttraumatic stress on the state of mental health of a person [<xref ref-type="bibr" rid="bib3">3</xref>,<xref ref-type="bibr" rid="bib4">4</xref>,<xref ref-type="bibr" rid="bib5">5</xref>,<xref ref-type="bibr" rid="bib6">6</xref>,<xref ref-type="bibr" rid="bib7">7</xref>]. The obvious relevance of the problem implies the involvement of various approaches to its solution, and the neurophysiological approach, as we hope, will allow us to identify new neurophysiological predictors for effective diagnosis and treatment of these disorders, on the one hand, and on the other hand - to elucidate the physiological mechanisms of these conditions. Earlier our group carried out neurophysiological studies of patients with nonpsychotic mental disorders due to a partial loss of sight owed to trauma [<xref ref-type="bibr" rid="bib8">8</xref>]. However, later we assumed that the group of patients, that was studied by us is not homogeneous, which made us take a more differentiated approach. The results of these studies are presented in this paper. </p>
       </sec>
       <sec>
@@ -120,7 +201,7 @@
                <title>Acoustic ERP in the comparison group, in the main group and in asthenia group.</title>
                <p>*The main components of the curve (P1, N1, P2, N2, P3, N4), whose indices were analyzed, are indicated. Positive deviation of the potential goes down.</p>
             </caption>
-            <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+            <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig1.png"/>
          </fig>
       </sec>
       <sec>
@@ -128,14 +209,15 @@
          <sec>
             <title>The results of psychological testing in asthenia and anxiety groups</title>
             <p>The results of psychological testing show the differences between the groups in all indicators: RA, PA, Ds, Do, Ao (<xref ref-type="fig" rid="fig2">Fig. 2</xref>). At the same time, the values of the three parameters - RA, PA and Do in the anxiety group were higher than in the asthenia group. Thus, the RA index in the anxiety group (59.3 ± 2.13) was higher (U [<xref ref-type="bibr" rid="bib15">15</xref>] = 0; p &lt;0.001) than in the asthenia group (49.7 ± 2.12). PA in the anxiety group (46.7 ± 3.81) also exceeded (U = 25, p &lt;0.001) the values of the asthenia group (35.0 ± 6.92), and the Ao values in the anxiety group (22,0 ± 0.85) were almost twice as large (U = 0, p &lt;0.001) than in the asthenia group (13.3 ± 2.97). The two remaining indicators: Ds (16.0 ± 0.84) and Do (17.7 ± 1.76) in the anxiety group were lower than in the asthenia group - 20.3 ± 2.58 (U = 12.5, p &lt;0.001) and 24.67 ± 1.76 (U = 0; p &lt;0.001) respectively. </p>
-            <fig id="fig2">
+          
+			<fig id="fig2">
                <object-id pub-id-type="doi"/>
                <label>Figure 2</label>
                <caption>
                   <title>The values of indicators of RA, PA, Ds, Do and Ao in the main asthenia and anxiety groups of subjects and in comparison group.</title>
-                  <p>*The values of indicators of reactive anxiety (RA), personal anxiety (PA), subjective assessment of depressive manifestations (Ds), an objective assessment of the severity of depression by the D. Hamilton scale (Do) and an objective evaluation of anxiety by the Hamilton scale (Ao) in the main asthenia and anxiety groups of subjects and in comparison group. Medium values (in points) and standard deviations are presented. * - differences with significance level of p&lt;0,05. # - significant differences (p &lt;0.05) in comparison with the asthenia group and * - with the comparison group.</p>
+                  <p>The values of indicators of reactive anxiety (RA), personal anxiety (PA), subjective assessment of depressive manifestations (Ds), an objective assessment of the severity of depression by the D. Hamilton scale (Do) and an objective evaluation of anxiety by the Hamilton scale (Ao) in the main asthenia and anxiety groups of subjects and in comparison group. Medium values (in points) and standard deviations are presented. * - differences with significance level of p&lt;0,05. # - significant differences (p &lt;0.05) in comparison with the asthenia group and * - with the comparison group.</p>
                </caption>
-               <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+               <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig2.png"/>
             </fig>
             <p>	The indices of psychological testing of asthenia and anxiety groups showed significant exceeding values (U values [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] from 0 to 25, p &lt;0.001) of RA, PA, Ds, Do and Ao of both groups relative towards the comparison group (<xref ref-type="fig" rid="fig2">Fig. 2</xref>).</p>
          </sec>
@@ -149,31 +231,23 @@
                   <title>Time parameters of the ERP.</title>
                   <p>*Time parameters of the ERP: time of sensorimotor reaction (T_ms), latent period of component P1, inter-peak intervals P1N1 and P3N4 in asthenia and anxiety groups. Medium values and standard deviations are presented. * - significant differences (p &lt;0,05) in the studied groups. </p>
                </caption>
-               <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+               <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig3.png"/>
             </fig>
-<<<<<<< HEAD
-            <p>The amplitude of the negative N2 component in the anxiety group (-6.54 ± 2.261 μV) had more negative values than in the asthenia group (-1.23 ± 1.644 μV) (U [<xref ref-type="bibr" rid="bib15">15</xref>] = 0; p &lt;0.001). The temporal indices of the ERP, such as the intervals P1N1 and P3N4, were smaler than in the asthenia group. Thus, the values of the P1N1 interval in the anxiety group were 31.0 ± 12.76 ms, and in the asthenia group they were 47.7 ± 17.94 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref>] = 50, p &lt;0.05). And the interval of the later P3N4 complex in the anxiety group was longer than in the early complexes and equaled 126.0 ± 12.68 ms, which was less than in the asthenia group 139.0 ± 11.43 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref> ] = 62.5, p &lt;0.05). </p>
-=======
             <p>The amplitude of the negative N2 component in the anxiety group (-6.54 ± 2.261 μV) had more negative values than in the asthenia group (-1.23 ± 1.644 μV) (U [<xref ref-type="bibr" rid="bib15">15</xref>] = 0; p &lt;0.001). The temporal indices of the ERP, such as the intervals P1N1 and P3N4, were smaler than in the asthenia group. Thus, the values of the P1N1 interval in the anxiety group were 31.0 ± 12.76 ms, and in the asthenia group they were 47.7 ± 17.94 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref>] = 50, p &lt;0.05). And the interval of the later P3N4 complex  in the anxiety group was longer than in the early complexes and equaled 126.0 ± 12.68 ms, which was less than in the asthenia group 139.0 ± 11.43 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib15">15</xref> ] = 62.5, p &lt;0.05). </p>
->>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          </sec>
          <sec>
             <title>ERP in asthenia and anxiety groups compared to the control group </title>
-            <p>Comparative analysis of the asthenia group with the comparison group revealed a sufficient number of indicators of the ERP, which have significant statistical differences. The correctness of the sensorimotor reaction in this group was 98.3 ± 2.44%, whereas in the CG - 92.5 ± 5.74% (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 62.5, p &lt;0.01). Also in this group there were differences in the amplitudes of the components: P1, N1, P2, N2 (<xref ref-type="fig" rid="fig4">Fig. 4</xref>-5). So, the values of the amplitude of the early positivity of P1 in the asthenia group were 4.25 ± 3.312 μV, and in the CG -4.15 ± 7.933 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 50, p &lt;0.001). The early negativity in that group was -2.78 ± 2.377 μV, and in the CG it was 10.55 ± 7.466 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). Differences between late P2 and N2 have the same trend of differences for the compared groups. The P2 values were 3.40 ± 2.029 μV in the asthenia group and -3.08 ± 8.287 μV in the CG (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05), the N2 value was -1.23 ± 1.644 μV , and in the CG it was 7.23 ± 5.754 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In the anxiety group, there were other, different from the asthenia group, significant indicators of the ERP. Basically, these were time indicators, such as the latency period of the P1 component, which values in the anxiety group were 76.0 ± 23.42 ms, while in the CG they were 49.3 ± 4.38 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 0 ; P &lt;0.001), as well as P1N1 intervals of 31.0 ± 12.76 ms in the anxiety group and 58.8 ± 7.447 ms in the CG (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 0; p &lt;0.001). </p>
+            <p>Comparative analysis of the asthenia group with the comparison group revealed a sufficient number of indicators of the ERP, which have significant statistical differences. The correctness of the sensorimotor reaction in this group was 98.3 ± 2.44%, whereas in the CG - 92.5 ± 5.74% (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 62.5, p &lt;0.01). Also in this group there were differences in the amplitudes of the components: P1, N1, P2, N2 (<xref ref-type="fig" rid="fig4">Fig. 4</xref>,<xref ref-type="fig" rid="fig5">Fig. 5</xref>). So, the values of the amplitude of the early positivity of P1 in the asthenia group were 4.25 ± 3.312 μV, and in the CG -4.15 ± 7.933 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 50, p &lt;0.001). The early negativity in that group was -2.78 ± 2.377 μV, and in the CG it was 10.55 ± 7.466 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). Differences between late P2 and N2 have the same trend of differences for the compared groups. The P2 values were 3.40 ± 2.029 μV in the asthenia group and -3.08 ± 8.287 μV in the CG (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05), the N2 value was -1.23 ± 1.644 μV , and in the CG it was 7.23 ± 5.754 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In the anxiety group, there were other, different from the asthenia group, significant indicators of the ERP. Basically, these were time indicators, such as the latency period of the P1 component, which values in the anxiety group were 76.0 ± 23.42 ms, while in the CG they were 49.3 ± 4.38 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 0 ; P &lt;0.001), as well as P1N1 intervals of 31.0 ± 12.76 ms in the anxiety group and 58.8 ± 7.447 ms in the CG (U [<xref ref-type="bibr" rid="bib15">15</xref>, <xref ref-type="bibr" rid="bib20">20</xref>] = 0; p &lt;0.001). </p>
             <fig id="fig4">
                <object-id pub-id-type="doi"/>
                <label>Figure 4</label>
                <caption>
                   <title>Amplitudes of positive components of ERP P1, P2, N1P2, P3N4 in the anxiety, asthenia and comparison groups.</title>
-                  <p> *significant differences (p &lt;0.05) of the indicators compared to the comparison group</p>
+                  <p>*significant differences (p &lt;0.05) of the indicators compared to the comparison group</p>
                </caption>
-               <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+               <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig4.png"/>
             </fig>
-<<<<<<< HEAD
-            <p>The interval of late N2P3 components in the anxiety group was 103.0 ± 24.09 ms, and in the CG it was 150.0 ± 48.812 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In addition to the P1N1 interval in the anxiety group, significant differences from the CG showed the P1N1 amplitude swing, which was 31.0 ± 12.76 μV, whereas in the CG it was 6.39 ± 1.110 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 50; P &lt;0.001). Among the indicators of the ERP were also those that had statistically significant differences from CG in both groups. </p>
-=======
             <p>The interval of late N2P3 components in the anxiety group was 103.0 ± 24.09 ms, and in the CG it was 150.0 ± 48.812 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 75; p &lt;0.05). In addition to the P1N1 interval in the anxiety group, significant differences from the CG showed the  P1N1 amplitude swing, which was 31.0 ± 12.76 μV, whereas in the CG it was 6.39 ± 1.110 μV (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 50; P &lt;0.001). Among the indicators of the ERP were also those that had statistically significant differences from CG in both groups. </p>
->>>>>>> 4309920016f4202104decd8ccee450acebac3c62
             <fig id="fig5">
                <object-id pub-id-type="doi"/>
                <label>Figure 5</label>
@@ -181,17 +255,18 @@
                   <title>Amplitudes of negative components of ERP N1, N2, N4 in anxiety, asthenia and comparison groups.</title>
                   <p>*significant differences (p &lt;0.05) of the indicators compared to the comparison group. </p>
                </caption>
-               <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+               <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig5.png"/>
             </fig>
             <p>These include such ERP indicators as latent periods of P3 and N4 components, amplitude N4 and amplitude ranges of N1P2 and P3N4. The latent periods of the P3 component and in the asthenia group are 312.0 ± 33.16 ms (U = 50; p &lt;0.001), and in the anxiety group 320.0 ± 34.61 ms (U [<xref ref-type="bibr" rid="bib15">15</xref>; <xref ref-type="bibr" rid="bib20">20</xref>] = 87.5, p &lt;0.05) were lower than in the CG (368.3 ± 37.15 ms) (<xref ref-type="fig" rid="fig6">Fig. 6</xref>). The latent periods of component N4 and in the asthenia group (451.0 ± 33.09 ms, (U = 25; p &lt;0.001)), and in the anxiety group (446.0 ± 25.52 ms, (U = 50; p &lt;0.001)) were lower than the values of this component in the CG (498.8 ± 32.67 ms). Amplitudes of this component had more negative values: -6.36 ± 1.44 μV (U = 75; p &lt;0.05) - in the asthenia group, -6.93 ± 4.379 μV (U = 50, p &lt;0.001) - in the anxiety group compared to the CG, where its values were -0.29 ± 6.789 μV. If the amplitude of the N1P2 amplitudes in the asthenia group (6.19 ± 0.416 μV (U = 75; p &lt;0.05)) and anxiety group (4.75 ± 2.538 μV (U = 50; P &lt;0.001)) were smaller than the CG (7.47 ± 2.599 μV), when the amplitude of the later P3N4 was 18.69 ± 5.525 μV (U = 25; p &lt;0.001) and 18.75 ± 0.873 ΜV (U = 75; p &lt;0.05), respectively, exceeded the values of CG (11.04 ± 5.965 μV). </p>
             <fig id="fig6">
                <object-id pub-id-type="doi"/>
                <label>Figure 6</label>
                <caption>
-                  <title>Time parameters of ERP: latent periods of P1, P3, N4 components and P1N1, N2P3 intervals in anxiety, asthenia and comparison groups.</title>
+                  <title>
+                     <bold>Figure 6</bold>. Time parameters of ERP: latent periods of P1, P3, N4 components and P1N1, N2P3 intervals in anxiety, asthenia and comparison groups.</title>
                   <p>*significant differences (p &lt;0.05) of the indicators compared to the comparison group.</p>
                </caption>
-               <graphic xlink:href="https://e-medjournal.com/suppl/"/>
+               <graphic xlink:href="https://e-medjournal.com/suppl/v2_1/tsira/fig6.png"/>
             </fig>
          </sec>
       </sec>
@@ -231,11 +306,7 @@
          </fn>
       </fn-group>
       <ref-list>
-<<<<<<< HEAD
-         <title>References</title>
-=======
          <title>References (Список використаної літератури)</title>
->>>>>>> 4309920016f4202104decd8ccee450acebac3c62
          <ref id="bib1">
             <element-citation publication-type="journal">
                <person-group person-group-type="author">
@@ -445,10 +516,13 @@
          <ref id="bib9">
             <element-citation publication-type="book">
                <person-group person-group-type="author">
-                  <collab>Prakticheskaya psihodiagnostika: metodiki i testyi</collab>
+                  <name>
+                     <surname>Raygorodskiy</surname>
+                     <given-names>DY</given-names>
+                  </name>
                </person-group>
-               <source>Raygorodskiy DY</source>
-               <publisher-loc>S</publisher-loc>
+               <source>Prakticheskaya psihodiagnostika: metodiki i testyi</source>
+               <publisher-loc>S-P</publisher-loc>
                <publisher-name>Bahrah</publisher-name>
                <year>2002</year>
             </element-citation>
