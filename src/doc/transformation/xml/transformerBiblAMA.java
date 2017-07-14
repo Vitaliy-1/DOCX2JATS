@@ -86,16 +86,16 @@ public class transformerBiblAMA {
 			authorsParsing(document, personGroup, m2add, m2);
 			
 			// regex patterns for chapter, conference, book and journal 
-		    Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
+		    Pattern pChapter = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:\\s*?[Ii]n)?:?(?<authors>.*?)(?:ed|eds|editor|editors?)?\\.(?<book>.*?)\\.(?:\\s*?(?<edition>\\d+)\\w+.*?\\.)?\\s*?(?:\\s*?(?<city>[A-Za-z\\s-–,]*?)\\s*?:)?\\s*?(?:\\s*(?<pub>[A-Za-z\\s\\-–]*?);)?(?:\\s*?(?<year>\\d{4})\\s*?:\\s*?)?(?:(?<fpage>\\d+)\\s*?)?[\\-\\–]?(?:\\s*?(?<lpage>\\d+))\\.");
 		    int mChapterCount = customMethods.groupNotNullCount(pChapter.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
 		    
 			Pattern pConference = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?:.*?:)?(?<conference>.*?);[ ]*(?:(?<confdate>\\w+[ ]*\\d+),)?[ ]*(?<year>\\d+)\\.[ ]*(?:(?<city>\\w+)?)[, ]*(?<country>\\w+)");
 		    int mConferenceCount = customMethods.groupNotNullCount(pConference.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));
 		    				    		
-			Pattern pBook = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<ed>:\\.)?\\s?(?:(?<loc>.*?)[:;])?\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
+			Pattern pBook = Pattern.compile("(.*?)\\.(?<title>.*?)\\.(?<loc>.*?)[:;]\\s?(?<pub>.*?)[;\\.]\\s?(?<year>\\d+)\\.");
 		    int mBookCount = customMethods.groupNotNullCount(pBook.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", "")));   
 			
-			Pattern pJournal = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?[;.]\\s*?(?:(?<volume>\\d+))?[ ]*(?:\\((?<issue>\\d+|\\d+\\s*[-,–]\\s*\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
+			Pattern pJournal = Pattern.compile("(.*?)\\.(.*?)\\.(.*?)(?<year>\\d+)\\s*?[;\\.]\\s*?(?:(?<volume>\\d+))?[ ]*(?:\\((?<issue>\\d+|\\d+\\s*[-,–]\\s*\\d+)\\))?\\s*?(?::\\s*?(?<fpage>\\d+|[A-Za-z]+\\d+))?(?:[ ]*[\\-\\–][ ]*(?<lpage>\\d+))?\\.");
 		    Matcher mJournal = pJournal.matcher(references.item(j).getTextContent().replaceAll("(?:(?<doi>DOI:)|(?<pmid>PMID:)|(?<uri>URL:)?)[ ]*(?<url>(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-]))", ""));
 		    int mJournalCount = customMethods.groupNotNullCount(mJournal);
 		    //System.out.println(j + 1 + "------Chapter: " + mChapterCount + "--Conferece: " + mConferenceCount + "--Book: " + mBookCount + "--Journal: " + mJournalCount);
