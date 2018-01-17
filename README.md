@@ -1,3 +1,6 @@
+# New version
+As was announced, the development of the new version of DOCX2JATS converter has started. It will contain only native Java libraries withoud any 3rd party code. The source code is available [here](https://github.com/Vitaliy-1/docxParser).  
+
 # DOCX2JATS
 Java project, aimed to facilitate DOCX to JATS XML transformation for scientific articles.
 
